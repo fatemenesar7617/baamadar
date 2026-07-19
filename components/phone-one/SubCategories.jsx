@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 
 
 export default function SubCategories({
+  selectedCategory,
   selectedSubCategory,
   onSelectSubCategory
 }) {
@@ -17,32 +18,22 @@ export default function SubCategories({
 
 
 
-  const subCategories = [
-    {
-      id: "mast",
-      title: "ماست"
-    },
-    {
-      id: "doogh",
-      title: "دوغ"
-    },
-    {
-      id: "panir",
-      title: "پنیر"
-    },
-    {
-      id: "khame",
-      title: "خامه"
-    },
-    {
-      id: "kare",
-      title: "کره"
-    },
-    {
-      id: "kashk",
-      title: "کشک"
-    },
+  const allSubCategories = [
+    { id: "mast", title: "ماست", categoryId: "labaniyat" },
+    { id: "doogh", title: "دوغ", categoryId: "labaniyat" },
+    { id: "panir", title: "پنیر", categoryId: "labaniyat" },
+    { id: "khame", title: "خامه", categoryId: "labaniyat" },
+    { id: "kare", title: "کره", categoryId: "labaniyat" },
+    { id: "kashk", title: "کشک", categoryId: "labaniyat" },
+    { id: "roghan", title: "روغن", categoryId: "asasi" },
+    { id: "shakar", title: "شکر", categoryId: "asasi" },
+    { id: "berenj", title: "برنج", categoryId: "asasi" },
+    { id: "adviyeh", title: "ادویه", categoryId: "asasi" },
   ];
+
+  const subCategories = selectedCategory
+    ? allSubCategories.filter((sub) => sub.categoryId === selectedCategory)
+    : allSubCategories;
 
 
 

@@ -1,61 +1,5 @@
 import ProductItem from "./ProductItem";
-
-
-const products = [
-  {
-    id: 1,
-    image: "/images/panir.svg",
-    title: "پنیر فتا صباح",
-    price: "898,000",
-    oldPrice: "948,000",
-    discount: "50%",
-    categoryId: "labaniyat",
-    subCategoryId: "panir",
-    hasSupport: true,
-    supportPrice: "4.000.000",
-  },
-
-  {
-    id: 2,
-    image: "/images/doogh.png",
-    title: "دوغ محلی",
-    price: "898,000",
-    oldPrice: "948,000",
-    discount: "50%",
-    categoryId: "labaniyat",
-    subCategoryId: "doogh",
-    hasSupport: false,
-    supportPrice: "3,000,000",
-  },
-
-  {
-    id: 3,
-    image: "/images/roghan.svg",
-    title: "روغن زیتون بکر کریستال",
-    price: "898,000",
-    oldPrice: "948,000",
-    discount: "50%",
-    categoryId: "asasi",
-    subCategoryId: "roghan",
-    hasSupport: true,
-    supportPrice: "30.000.000",
-  },
-
-  {
-    id: 4,
-    image: "/images/shekar.png",
-    title: "شکر سفید",
-    price: "898,000",
-    oldPrice: "948,000",
-    discount: "50%",
-    categoryId: "asasi",
-    subCategoryId: "shakar",
-    hasSupport: true,
-    supportPrice: "1,000,000",
-  },
-
-];
-
+import allProducts from "@/data/products";
 
 export default function ProductList({
   selectedCategory,
@@ -63,10 +7,15 @@ export default function ProductList({
   cart,
   setCart,
   setSelectedProduct,
+  searchQuery = "",
+  activeFilter,
+  sortOption,
+  products,
 }) {
 
+  const sourceProducts = products || allProducts;
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = sourceProducts.filter((product) => {
 
     const categoryMatch =
       selectedCategory === null ||
@@ -77,9 +26,40 @@ export default function ProductList({
       selectedSubCategory === null ||
       product.subCategoryId === selectedSubCategory;
 
+    const searchMatch =
+      !searchQuery.trim() ||
+      product.title.includes(searchQuery.trim());
 
-    return categoryMatch && subCategoryMatch;
+    const supportMatch =
+      activeFilter !== "support" ||
+      product.hasSupport === true;
 
+    const discountMatch =
+      activeFilter !== "discount" ||
+      (product.discount && product.discount !== "");
+
+    return categoryMatch && subCategoryMatch && searchMatch && supportMatch && discountMatch;
+
+  });
+
+  const parsePrice = (priceStr) => Number(priceStr.replace(/,/g, ""));
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortOption) {
+      case "cheapest":
+        return parsePrice(a.price) - parsePrice(b.price);
+      case "mostExpensive":
+        return parsePrice(b.price) - parsePrice(a.price);
+      case "highestDiscount":
+        return parseInt(b.discount) - parseInt(a.discount);
+      case "newest":
+        return b.id - a.id;
+      case "support":
+        return (b.hasSupport ? 1 : 0) - (a.hasSupport ? 1 : 0);
+      case "bestselling":
+      default:
+        return 0;
+    }
   });
 
 
@@ -89,7 +69,7 @@ export default function ProductList({
     <div className="pb-20">
 
 
-      {filteredProducts.map((product) => (
+      {sortedProducts.map((product) => (
 
         <ProductItem
 

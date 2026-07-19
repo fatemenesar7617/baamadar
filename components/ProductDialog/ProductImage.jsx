@@ -20,7 +20,7 @@ export default function ProductImage({
         alt={product?.title}
         className="
           block
-          h-[240px]
+          h-[130px]
           w-full
           object-contain
         "

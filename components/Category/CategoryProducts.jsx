@@ -1,12 +1,8 @@
-import products from "@/data/products";
+import Image from "next/image";
 
-export default function ProductSection({ cart, setCart, onProductClick,searchQuery =" ", }) {
-  const filteredProducts = searchQuery.trim()
-    ? products.filter((product) =>
-        product.title.includes(searchQuery.trim()) ||
-        product.price.includes(searchQuery.trim())
-      )
-    : products;
+export default function CategoryProducts({ category, onClose, cart, setCart }) {
+  if (!category) return null;
+
   const addToCart = (product) => {
     const exists = cart.find((item) => item.id === product.id);
     if (exists) {
@@ -52,33 +48,34 @@ export default function ProductSection({ cart, setCart, onProductClick,searchQue
     );
   };
 
-  const removeFromCart = (id) => {
-    setCart(cart.filter((i) => i.id !== id));
-  };
-
   return (
-    <section className="px-4 mt-8">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="font-peyda font-bold text-sm text-amber-700">
-          محصولات ویژه
-        </h2>
-        <span className="font-peyda text-xs text-amber-700">
-          بهترین پیشنهادات روز
-        </span>
-      </div>
+    <div
+      className="fixed inset-0 z-50 bg-black/40 flex items-end justify-center"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white w-full max-w-[375px] rounded-t-3xl p-5 pb-8 animate-slide-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-center mb-5">
+          <h3 className="font-peyda font-bold text-base text-gray-800">
+            {category.title}
+          </h3>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-lg"
+          >
+            ✕
+          </button>
+        </div>
 
-      <div className="grid grid-cols-2 gap-3">
-  {filteredProducts.map((product) => {
-    const qty = getQuantity(product.id);
-          return (
+        <div className="grid grid-cols-2 gap-3">
+          {category.products.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm"
             >
-              <div
-                className="w-full h-36 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
-                onClick={() => onProductClick && onProductClick(product)}
-              >
+              <div className="w-full h-36 bg-gray-50 rounded-xl flex items-center justify-center">
                 <img
                   src={product.image}
                   alt={product.title}
@@ -86,9 +83,9 @@ export default function ProductSection({ cart, setCart, onProductClick,searchQue
                 />
               </div>
 
-              <h3 className="font-peyda text-sm font-medium mt-3 text-center min-h-[40px] flex items-center justify-center">
+              <h4 className="font-peyda text-sm font-medium mt-3 text-center min-h-[40px] flex items-center justify-center">
                 {product.title}
-              </h3>
+              </h4>
 
               <div className="font-iranyekan text-center mt-3">
                 <div className="flex items-center justify-center gap-2">
@@ -100,11 +97,11 @@ export default function ProductSection({ cart, setCart, onProductClick,searchQue
                   </span>
                 </div>
                 <span className="font-peyda block text-sm font-bold mt-1">
-                  {product.price} تومان
+                  {product.newPrice} تومان
                 </span>
               </div>
 
-              {qty === 0 ? (
+              {getQuantity(product.id) === 0 ? (
                 <button
                   onClick={() => addToCart(product)}
                   className="font-peyda w-full h-10 mt-4 rounded-full bg-[#E86B42] text-white text-sm font-medium"
@@ -117,25 +114,17 @@ export default function ProductSection({ cart, setCart, onProductClick,searchQue
                     onClick={() => increase(product.id)}
                     className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold"
                   >+</button>
-                  <span className="font-peyda text-sm font-bold">{qty}</span>
+                  <span className="font-peyda text-sm font-bold">{getQuantity(product.id)}</span>
                   <button
                     onClick={() => decrease(product.id)}
                     className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-lg font-bold"
                   >-</button>
-                  <button
-                    onClick={() => removeFromCart(product.id)}
-                    className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
                 </div>
               )}
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

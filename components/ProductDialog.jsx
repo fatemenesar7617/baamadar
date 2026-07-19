@@ -7,6 +7,8 @@ export default function ProductDialog({
   open,
   onClose,
   product,
+  cart,
+  setCart,
 }) {
 
   if (!open || !product) return null;
@@ -56,13 +58,18 @@ export default function ProductDialog({
         </button>
 
 
-        <div className="
-          h-full
-          overflow-hidden
-        ">
+        <div
+          className="
+            h-full
+            overflow-hidden
+            pb-[140px]
+          "
+        >
+
           <ProductSection3
             product={product}
           />
+
         </div>
 
 
@@ -72,16 +79,22 @@ export default function ProductDialog({
             bottom-0
             left-0
             right-0
+            h-[170px]
             bg-white
             z-50
             px-4
             pb-4
           "
         >
+
           <ProductBuyBox
             product={product}
+            cart={cart}
+            setCart={setCart}
           />
+
         </div>
+
 
       </div>
 

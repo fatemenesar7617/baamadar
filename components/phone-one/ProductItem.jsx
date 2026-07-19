@@ -23,15 +23,18 @@ export default function ProductItem({
 
 
   const addToCart = () => {
-
-    setCart([
-      ...cart,
-      {
-        id: product.id,
-        quantity: 1,
-      },
-    ]);
-
+    const exists = cart.find((item) => item.id === product.id);
+    if (exists) {
+      setCart(
+        cart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      setCart([...cart, { id: product.id, quantity: 1 }]);
+    }
   };
 
 

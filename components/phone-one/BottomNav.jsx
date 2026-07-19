@@ -1,39 +1,28 @@
-"use client";
-
-import { useState } from "react";
-
-export default function BottomNav() {
-
-
-  const [activeItem, setActiveItem] = useState("home");
-
-
+export default function BottomNav({ activeTab, onTabChange }) {
   const items = [
     {
-      id:"home",
-      title:"خانه",
-      icon:"/icons/menu-home.svg"
+      id: "home",
+      title: "خانه",
+      icon: "/icons/menu-home.svg",
     },
     {
-      id:"cart",
-      title:"سبد خرید",
-      icon:"/icons/shopping basket 02.svg"
+      id: "cart",
+      title: "سبد خرید",
+      icon: "/icons/shopping basket 02.svg",
     },
     {
-      id:"orders",
-      title:"سفارش‌ها",
-      icon:"/icons/receipt.svg"
+      id: "orders",
+      title: "سفارش‌ها",
+      icon: "/icons/receipt.svg",
     },
     {
-      id:"profile",
-      title:"پروفایل",
-      icon:"/icons/user.svg"
+      id: "profile",
+      title: "پروفایل",
+      icon: "/icons/user.svg",
     },
   ];
 
-
   return (
-
     <div className="
       absolute
       bottom-0
@@ -48,13 +37,10 @@ export default function BottomNav() {
       justify-around
       z-50
     ">
-
-
-      {items.map((item)=>(
-
+      {items.map((item) => (
         <div
           key={item.id}
-          onClick={() => setActiveItem(item.id)}
+          onClick={() => onTabChange(item.id)}
           className={`
             flex
             flex-col
@@ -62,14 +48,12 @@ export default function BottomNav() {
             gap-1
             cursor-pointer
             ${
-              activeItem === item.id
+              activeTab === item.id
               ? "text-[#E86B42]"
               : "text-gray-400"
             }
           `}
         >
-
-
           <img
             src={item.icon}
             alt={item.title}
@@ -78,28 +62,17 @@ export default function BottomNav() {
               h-6
               object-contain
               ${
-                activeItem === item.id
+                activeTab === item.id
                 ? "opacity-100"
                 : "opacity-60"
               }
             `}
           />
-
-
-          <span className="
-            text-xs
-            font-peyda
-          ">
+          <span className="text-xs font-peyda">
             {item.title}
           </span>
-
-
         </div>
-
       ))}
-
-
     </div>
-
   );
 }

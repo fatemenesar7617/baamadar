@@ -1,20 +1,21 @@
-export default function Header() {
-  return(
-  <header className="flex  justify-between items-center px-4 py-3 bg-white shadow">
-
-       {/*   علامت>کنارلوگو مادر */}
-    <div className=" flex items-center gap-1">
-      <img src="/logos/direction-left 01.svg" alt="direction" className="w-5 h-5"/>
-    
-      <img src="/logos/madarlogo.svg" alt="logo" className="w-24 h-auto"/>
-  
-    </div>
-     {/*   سبد خرید سمت چپ */}
-    <div>
-      <img src="/logos/sabad.svg" alt="cart" className="w-12 h-auto"/>
-      
-      
+export default function Header({ onCartClick, cartCount = 0 }) {
+  return (
+    <header className="flex justify-between items-center px-4 py-3 bg-white shadow">
+      <div className="flex items-center gap-1">
+        <img src="/logos/direction-left 01.svg" alt="direction" className="w-5 h-5"/>
+        <img src="/logos/madarlogo.svg" alt="logo" className="w-24 h-auto"/>
       </div>
-  </header>
+      <div
+        onClick={onCartClick}
+        className="relative cursor-pointer"
+      >
+        <img src="/logos/sabad.svg" alt="cart" className="w-12 h-auto"/>
+        {cartCount > 0 && (
+          <span className="absolute -top-1 -left-1 w-5 h-5 bg-[#E86B42] text-white text-xs rounded-full flex items-center justify-center font-peyda font-bold">
+            {cartCount}
+          </span>
+        )}
+      </div>
+    </header>
   );
 }

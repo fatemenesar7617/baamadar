@@ -1,7 +1,12 @@
 import { useState } from "react";
 import SortMeno from "./SortMeno";
 
-export default function CategoryToolbar() {
+export default function CategoryToolbar({
+  activeFilter,
+  onFilterChange,
+  sortOption,
+  onSortChange,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -30,14 +35,19 @@ export default function CategoryToolbar() {
             />
           </div>
 
-          {isOpen && <SortMeno />}
+          {isOpen && <SortMeno sortOption={sortOption} onSortChange={onSortChange} onClose={() => setIsOpen(false)} />}
 
         </div>
 
         {/* سمت چپ */}
         <div className="flex items-center gap-6">
 
-          <div className="flex items-center gap-1 text-gray-700 text-sm font-peyda">
+          <div
+            onClick={() => onFilterChange(activeFilter === "support" ? null : "support")}
+            className={`flex items-center gap-1 text-sm font-peyda cursor-pointer transition-colors ${
+              activeFilter === "support" ? "text-[#E86B42] font-semibold" : "text-gray-700"
+            }`}
+          >
             <img
               src="/icons/card.svg"
               alt="card"
@@ -46,7 +56,12 @@ export default function CategoryToolbar() {
             <span>حامی کارت</span>
           </div>
 
-          <div className="flex items-center gap-1 text-gray-700 text-sm font-peyda">
+          <div
+            onClick={() => onFilterChange(activeFilter === "discount" ? null : "discount")}
+            className={`flex items-center gap-1 text-sm font-peyda cursor-pointer transition-colors ${
+              activeFilter === "discount" ? "text-[#E86B42] font-semibold" : "text-gray-700"
+            }`}
+          >
             <img
               src="/icons/takhfifat.svg"
               alt="discount"
