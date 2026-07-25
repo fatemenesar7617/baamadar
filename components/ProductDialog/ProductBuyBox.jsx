@@ -95,7 +95,7 @@ const quantity = cartItem?.quantity || 0;
     setCart([
       ...currentCart,
       {
-        ...product,
+        id: product.id,
         quantity: 1,
       },
     ]);

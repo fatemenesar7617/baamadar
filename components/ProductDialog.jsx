@@ -51,7 +51,7 @@ export default function ProductDialog({
             bg-white
             text-gray-700
             text-3xl
-            shadow
+          
           "
         >
           ×

@@ -24,7 +24,7 @@ export default function Home() {
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <main className="max-w-[375px] mx-auto min-h-screen bg-white">
+    <main className="max-w-[375px] mx-auto min-h-screen bg-white pb-20">
   
       <Header onCartClick={() => setCartOpen(true)} cartCount={cartCount} />
       <SearchBox query={searchQuery} setQuery={setSearchQuery} />
@@ -42,12 +42,12 @@ export default function Home() {
       />
       <BottomBaner />
       <Footer
-        onCartClick={() => setCartOpen(true)}
         onOrdersClick={() => setOrdersOpen(true)}
         onProfileClick={() => setProfileOpen(true)}
       />
 
       <CartModal
+        key={cartOpen ? "open" : "closed"}
         open={cartOpen}
         onClose={() => setCartOpen(false)}
         cart={cart}

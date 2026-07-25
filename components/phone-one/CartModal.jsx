@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import products from "@/data/products";
 import categories from "@/data/categories";
 
@@ -15,26 +15,10 @@ export default function CartModal({
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState("");
 
-  useEffect(() => {
-    if (open) {
-      setStep("cart");
-      setName("");
-      setAddress("");
-      setPhone("");
-      setPhoneError("");
-    }
-  }, [open]);
-
   if (!open) return null;
 
   const findProduct = (id) => {
-
-  const cartItem = cart.find((item) => item.id === id);
-
-  if (cartItem) return cartItem;
-
   const product = products.find((p) => p.id === id);
-
   if (product) return product;
 
   for (const cat of categories) {
@@ -47,7 +31,7 @@ export default function CartModal({
 
   const cartProducts = cart.map((item) => {
     const product = findProduct(item.id);
-    return { ...product, quantity: item.quantity };
+    return product ? { ...product, quantity: item.quantity } : null;
   }).filter(Boolean);
 
   const getPrice = (item) => {
