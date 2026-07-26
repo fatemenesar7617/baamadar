@@ -163,11 +163,11 @@ export default function LoginPage() {
           {step === "phone" && (
             <p className="font-peyda text-xs text-gray-400 mt-4 text-center leading-6">
               ورود شما به معنی پذیرش{" "}
-              <span className="text-[#E86B42] underline">
+              <span className="text-blue-600 underline">
                 شرایط خدمات
               </span>{" "}
               و{" "}
-              <span className="text-[#E86B42] underline">
+              <span className="text-blue-600 underline">
                 حریم خصوصی
               </span>{" "}
               است.
