@@ -1,9 +1,13 @@
+import { useRouter } from "next/router";
+
 export default function CategoryHeader({
   cart = [],
   onCartClick,
   onSearchClick,
 }) {
 
+
+  const router = useRouter();
 
   const totalCount = cart.reduce(
     (sum, item) => sum + item.quantity,
@@ -22,7 +26,8 @@ export default function CategoryHeader({
         <img
           src="/logos/madarlogo.svg"
           alt="logo"
-          className="w-20 h-auto"
+          className="w-20 h-auto cursor-pointer"
+          onClick={() => router.push("/")}
         />
 
 

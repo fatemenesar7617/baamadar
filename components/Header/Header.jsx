@@ -1,7 +1,13 @@
+import { useRouter } from "next/router";
+
 export default function Header({ onCartClick, cartCount = 0 }) {
+  const router = useRouter();
   return (
     <header className="flex justify-between items-center px-4 py-3 bg-white shadow">
-      <div className="flex items-center gap-1">
+      <div
+        className="flex items-center gap-1 cursor-pointer"
+        onClick={() => router.push("/")}
+      >
         <img src="/logos/direction-left 01.svg" alt="direction" className="w-5 h-5"/>
         <img src="/logos/madarlogo.svg" alt="logo" className="w-24 h-auto"/>
       </div>

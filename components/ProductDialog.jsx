@@ -2,14 +2,18 @@
 
 import ProductSection3 from "./ProductDialog/ProductSection3";
 import ProductBuyBox from "./ProductDialog/ProductBuyBox";
+import { useCart } from "@/components/CartContext";
 
 export default function ProductDialog({
   open,
   onClose,
   product,
-  cart,
-  setCart,
+  cart: cartProp,
+  setCart: setCartProp,
 }) {
+  const cartCtx = useCart();
+  const cart = cartProp ?? cartCtx.cart;
+  const setCart = setCartProp ?? cartCtx.setCart;
 
   if (!open || !product) return null;
 
@@ -18,17 +22,19 @@ export default function ProductDialog({
       className="
         fixed
         inset-0
-        z-50
+        z-[60]
         flex
         justify-center
         items-start
         pt-[115px]
       "
     >
+      <div className="absolute inset-0 z-40 bg-black/40" onClick={onClose} />
 
       <div
         className="
           relative
+          z-[60]
           w-[390px]
           h-[calc(100vh-115px)]
           bg-white
@@ -81,9 +87,9 @@ export default function ProductDialog({
             right-0
             h-[170px]
             bg-white
-            z-50
+            z-[80]
             px-4
-            pb-4
+            pb-[80px]
           "
         >
 

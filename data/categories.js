@@ -1,464 +1,104 @@
 const categories = [
   {
-    id: 1,
-    title: "لوازم جانبی",
-    image: "/images/janebi.svg",
-    products: [
-      {
-        id: 101,
-        title: "کاور گوشی سیلیکونی",
-        image: "/images/category-products/janebi-1.png",
-        oldPrice: "120,000",
-        newPrice: "89,000",
-        discount: "25%",
-      },
-      {
-        id: 102,
-        title: "هدست بلوتوثی",
-        image: "/images/category-products/janebi-2.png",
-        oldPrice: "350,000",
-        newPrice: "279,000",
-        discount: "20%",
-      },
-    ],
+    "id": "janebi",
+    "title": "لوازم جانبی",
+    "image": "/images/janebi.svg"
   },
   {
-    id: 2,
-    title: "یکبار مصرف",
-    image: "/images/yekbarmasraf.svg",
-    products: [
-      {
-        id: 201,
-        title: "بشقاب یکبار مصرف",
-        image: "/images/category-products/yekbar-1.png",
-        oldPrice: "45,000",
-        newPrice: "32,000",
-        discount: "28%",
-      },
-      {
-        id: 202,
-        title: "لیوان کاغذی",
-        image: "/images/category-products/yekbar-2.png",
-        oldPrice: "38,000",
-        newPrice: "27,000",
-        discount: "28%",
-      },
-    ],
+    "id": "yekbar",
+    "title": "یکبار مصرف",
+    "image": "/images/yekbarmasraf.svg"
   },
   {
-    id: 3,
-    title: "سلامت",
-    image: "/images/salamati.svg",
-    products: [
-      {
-        id: 301,
-        title: "vitamin C 1000",
-        image: "/images/category-products/salamat-1.png",
-        oldPrice: "280,000",
-        newPrice: "210,000",
-        discount: "25%",
-      },
-      {
-        id: 302,
-        title: "مکمل امگا 3",
-        image: "/images/category-products/salamat-2.png",
-        oldPrice: "320,000",
-        newPrice: "249,000",
-        discount: "22%",
-      },
-    ],
+    "id": "salamat",
+    "title": "سلامت",
+    "image": "/images/salamati.svg"
   },
   {
-    id: 4,
-    title: "لوازم تحریر",
-    image: "/images/tahrir.svg",
-    products: [
-      {
-        id: 401,
-        title: "خودکار روان",
-        image: "/images/category-products/tahrir-1.png",
-        oldPrice: "15,000",
-        newPrice: "9,000",
-        discount: "40%",
-      },
-      {
-        id: 402,
-        title: "دفتر مشق 200 برگ",
-        image: "/images/category-products/tahrir-2.png",
-        oldPrice: "25,000",
-        newPrice: "18,000",
-        discount: "28%",
-      },
-    ],
+    "id": "tahrir",
+    "title": "لوازم تحریر",
+    "image": "/images/tahrir.svg"
   },
   {
-    id: 5,
-    title: "افزودنی ها",
-    image: "/images/afzodani.svg",
-    products: [
-      {
-        id: 501,
-        title: "رب گوجه فرنگی",
-        image: "/images/category-products/afzodani-1.png",
-        oldPrice: "42,000",
-        newPrice: "33,000",
-        discount: "21%",
-      },
-      {
-        id: 502,
-        title: "سس کچاپ",
-        image: "/images/category-products/afzodani-2.png",
-        oldPrice: "35,000",
-        newPrice: "26,000",
-        discount: "25%",
-      },
-    ],
+    "id": "cat-41",
+    "title": "افزودنی‌ها",
+    "image": "/images/afzodani.svg"
   },
   {
-    id: 6,
-    title: "خشکبار، شیرینی",
-    image: "/images/khoshkbar.svg",
-    products: [
-      {
-        id: 601,
-        title: "پسته اکبری",
-        image: "/images/category-products/khoshkbar-1.png",
-        oldPrice: "890,000",
-        newPrice: "749,000",
-        discount: "15%",
-      },
-      {
-        id: 602,
-        title: "بادام هندی",
-        image: "/images/category-products/khoshkbar-2.png",
-        oldPrice: "650,000",
-        newPrice: "529,000",
-        discount: "18%",
-      },
-    ],
+    "id": "khoshkbar",
+    "title": "خشکبار و شیرینی",
+    "image": "/images/khoshkbar.svg"
   },
   {
-    id: 7,
-    title: "کنسروی و آماده",
-    image: "/images/konserv.svg",
-    products: [
-      {
-        id: 701,
-        title: "کنسرو لوبیا",
-        image: "/images/category-products/konserv-1.png",
-        oldPrice: "28,000",
-        newPrice: "21,000",
-        discount: "25%",
-      },
-      {
-        id: 702,
-        title: "تن ماهی",
-        image: "/images/category-products/konserv-2.png",
-        oldPrice: "65,000",
-        newPrice: "49,000",
-        discount: "24%",
-      },
-    ],
+    "id": "konserv",
+    "title": "کنسروی و آماده",
+    "image": "/images/konserv.svg"
   },
   {
-    id: 8,
-    title: "تنقلات",
-    image: "/images/tanagholat.svg",
-    products: [
-      {
-        id: 801,
-        title: "چیپس مزمز",
-        image: "/images/category-products/tanagholat-1.png",
-        oldPrice: "18,000",
-        newPrice: "12,000",
-        discount: "33%",
-      },
-      {
-        id: 802,
-        title: "پفک نمکی",
-        image: "/images/category-products/tanagholat-2.png",
-        oldPrice: "15,000",
-        newPrice: "10,000",
-        discount: "33%",
-      },
-    ],
+    "id": "tanagholat",
+    "title": "تنقلات",
+    "image": "/images/tanagholat.svg"
   },
   {
-    id: 9,
-    title: "منجمد، یخچالی",
-    image: "/images/mongamed.svg",
-    products: [
-      {
-        id: 901,
-        title: "سوسیس مرغ",
-        image: "/images/category-products/mongamed-1.png",
-        oldPrice: "75,000",
-        newPrice: "59,000",
-        discount: "21%",
-      },
-      {
-        id: 902,
-        title: "ناگت مرغ",
-        image: "/images/category-products/mongamed-2.png",
-        oldPrice: "89,000",
-        newPrice: "69,000",
-        discount: "22%",
-      },
-    ],
+    "id": "monjamed",
+    "title": "منجمد و یخچالی",
+    "image": "/images/mongamed.svg"
   },
   {
-    id: 10,
-    title: "آرایشی بهداشتی",
-    image: "/images/arayeshi.svg",
-    products: [
-      {
-        id: 1001,
-        title: "شامپو ضد ریزش",
-        image: "/images/category-products/arayeshi-1.png",
-        oldPrice: "180,000",
-        newPrice: "139,000",
-        discount: "22%",
-      },
-      {
-        id: 1002,
-        title: "کرم مرطوب کننده",
-        image: "/images/category-products/arayeshi-2.png",
-        oldPrice: "220,000",
-        newPrice: "169,000",
-        discount: "23%",
-      },
-    ],
+    "id": "arayeshi",
+    "title": "آرایشی و بهداشتی",
+    "image": "/images/arayeshi.svg"
   },
   {
-    id: 11,
-    title: "مادر و کودک",
-    image: "/images/madarkoodak.svg",
-    products: [
-      {
-        id: 1101,
-        title: "پوشک بچه",
-        image: "/images/category-products/madar-1.png",
-        oldPrice: "320,000",
-        newPrice: "259,000",
-        discount: "19%",
-      },
-      {
-        id: 1102,
-        title: "شیر خشک",
-        image: "/images/category-products/madar-2.png",
-        oldPrice: "450,000",
-        newPrice: "389,000",
-        discount: "13%",
-      },
-    ],
+    "id": "madar",
+    "title": "مادر و کودک",
+    "image": "/images/madarkoodak.svg"
   },
   {
-    id: 12,
-    title: "بهداشت خانگی",
-    image: "/images/behdash.svg",
-    products: [
-      {
-        id: 1201,
-        title: "مایع ظرفشویی",
-        image: "/images/category-products/behdash-1.png",
-        oldPrice: "45,000",
-        newPrice: "34,000",
-        discount: "24%",
-      },
-      {
-        id: 1202,
-        title: "پودر لباسشویی",
-        image: "/images/category-products/behdash-2.png",
-        oldPrice: "120,000",
-        newPrice: "95,000",
-        discount: "20%",
-      },
-    ],
+    "id": "behdasht",
+    "title": "بهداشت خانگی",
+    "image": "/images/behdash.svg"
   },
   {
-    id: 13,
-    title: "شور و ترشیجات",
-    image: "/images/shoor.svg",
-    products: [
-      {
-        id: 1301,
-        title: "ترشی فلفل",
-        image: "/images/category-products/shoor-1.png",
-        oldPrice: "35,000",
-        newPrice: "26,000",
-        discount: "25%",
-      },
-      {
-        id: 1302,
-        title: "زیتون شور",
-        image: "/images/category-products/shoor-2.png",
-        oldPrice: "55,000",
-        newPrice: "42,000",
-        discount: "23%",
-      },
-    ],
+    "id": "shoor",
+    "title": "شور و ترشیجات",
+    "image": "/images/shoor.svg"
   },
   {
-    id: 14,
-    title: "نوشیدنی",
-    image: "/images/noshidani.svg",
-    products: [
-      {
-        id: 1401,
-        title: "آب معدنی",
-        image: "/images/category-products/noshidani-1.png",
-        oldPrice: "8,000",
-        newPrice: "5,000",
-        discount: "37%",
-      },
-      {
-        id: 1402,
-        title: "دوغ گازدار",
-        image: "/images/category-products/noshidani-2.png",
-        oldPrice: "12,000",
-        newPrice: "8,000",
-        discount: "33%",
-      },
-    ],
+    "id": "noshidani",
+    "title": "نوشیدنی",
+    "image": "/images/noshidani.svg"
   },
   {
-    id: 15,
-    title: "لبنیات",
-    image: "/images/labaniyat.svg",
-    products: [
-      {
-        id: 1501,
-        title: "پنیر فتا",
-        image: "/images/category-products/labaniyat-1.png",
-        oldPrice: "65,000",
-        newPrice: "49,000",
-        discount: "24%",
-      },
-      {
-        id: 1502,
-        title: "ماست کم چرب",
-        image: "/images/category-products/labaniyat-2.png",
-        oldPrice: "42,000",
-        newPrice: "33,000",
-        discount: "21%",
-      },
-    ],
+    "id": "labaniyat",
+    "title": "لبنیات",
+    "image": "/images/labaniyat.svg"
   },
   {
-    id: 16,
-    title: "پروتئنی",
-    image: "/images/porotein.svg",
-    products: [
-      {
-        id: 1601,
-        title: "سینه مرغ",
-        image: "/images/category-products/porotein-1.png",
-        oldPrice: "180,000",
-        newPrice: "149,000",
-        discount: "17%",
-      },
-      {
-        id: 1602,
-        title: "گوشت چرخ کرده",
-        image: "/images/category-products/porotein-2.png",
-        oldPrice: "250,000",
-        newPrice: "209,000",
-        discount: "16%",
-      },
-    ],
+    "id": "porotein",
+    "title": "پروتئین",
+    "image": "/images/porotein.svg"
   },
   {
-    id: 17,
-    title: "اساسی و خواربار",
-    image: "/images/asasi.svg",
-    products: [
-      {
-        id: 1701,
-        title: "روغن زیتون",
-        image: "/images/category-products/asasi-1.png",
-        oldPrice: "320,000",
-        newPrice: "259,000",
-        discount: "19%",
-      },
-      {
-        id: 1702,
-        title: "برنج ایرانی",
-        image: "/images/category-products/asasi-2.png",
-        oldPrice: "450,000",
-        newPrice: "389,000",
-        discount: "13%",
-      },
-    ],
+    "id": "asasi",
+    "title": "اساسی و خواربار",
+    "image": "/images/asasi.svg"
   },
   {
-    id: 18,
-    title: "صبحانه",
-    image: "/images/sobhane.svg",
-    products: [
-      {
-        id: 1801,
-        title: "عسل طبیعی",
-        image: "/images/category-products/sobhane-1.png",
-        oldPrice: "280,000",
-        newPrice: "229,000",
-        discount: "18%",
-      },
-      {
-        id: 1802,
-        title: "مربا توت فرنگی",
-        image: "/images/category-products/sobhane-2.png",
-        oldPrice: "65,000",
-        newPrice: "49,000",
-        discount: "24%",
-      },
-    ],
+    "id": "sobhane",
+    "title": "صبحانه",
+    "image": "/images/sobhane.svg"
   },
   {
-    id: 19,
-    title: "نان و شیرینی",
-    image: "/images/nan.svg",
-    products: [
-      {
-        id: 1901,
-        title: "نان بربری",
-        image: "/images/category-products/nan-1.png",
-        oldPrice: "15,000",
-        newPrice: "10,000",
-        discount: "33%",
-      },
-      {
-        id: 1902,
-        title: "شیرینی خامه‌ای",
-        image: "/images/category-products/nan-2.png",
-        oldPrice: "85,000",
-        newPrice: "69,000",
-        discount: "18%",
-      },
-    ],
+    "id": "nan",
+    "title": "نان و شیرینی",
+    "image": "/images/nan.svg"
   },
   {
-    id: 20,
-    title: "میوه، سبزیجات",
-    image: "/images/miveh.svg",
-    products: [
-      {
-        id: 2001,
-        title: "سیب قرمز",
-        image: "/images/category-products/miveh-1.png",
-        oldPrice: "35,000",
-        newPrice: "26,000",
-        discount: "25%",
-      },
-      {
-        id: 2002,
-        title: "گوجه فرنگی",
-        image: "/images/category-products/miveh-2.png",
-        oldPrice: "28,000",
-        newPrice: "21,000",
-        discount: "25%",
-      },
-    ],
-  },
+    "id": "miveh",
+    "title": "میوه و سبزیجات",
+    "image": "/images/miveh.svg"
+  }
 ];
 
 export default categories;

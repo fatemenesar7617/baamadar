@@ -1,12 +1,27 @@
+import { useRef, useEffect } from "react";
 import products from "@/data/products";
 
-export default function ProductSection({ cart, setCart, onProductClick,searchQuery =" ", }) {
-  const filteredProducts = searchQuery.trim()
+export default function ProductSection({
+  cart,
+  setCart,
+  onProductClick,
+  searchQuery = " ",
+  title = "محصولات ویژه",
+  subtitle = "بهترین پیشنهادات روز",
+  discountedOnly = false,
+  onViewAll = null,
+}) {
+  let filteredProducts = searchQuery.trim()
     ? products.filter((product) =>
         product.title.includes(searchQuery.trim()) ||
         product.price.includes(searchQuery.trim())
       )
     : products;
+
+  if (discountedOnly) {
+    filteredProducts = filteredProducts.filter((product) => !!product.discount);
+  }
+
   const addToCart = (product) => {
     const exists = cart.find((item) => item.id === product.id);
     if (exists) {
@@ -56,49 +71,114 @@ export default function ProductSection({ cart, setCart, onProductClick,searchQue
     setCart(cart.filter((i) => i.id !== id));
   };
 
+  const scrollRef = useRef(null);
+  const drag = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onWheel = (e) => {
+      if (e.deltaY !== 0) {
+        el.scrollLeft += e.deltaY;
+        e.preventDefault();
+      }
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const onPointerDown = (e) => {
+    if (e.pointerType !== "mouse") return;
+    const el = scrollRef.current;
+    drag.current.active = true;
+    drag.current.moved = false;
+    drag.current.startX = e.clientX;
+    drag.current.scrollLeft = el.scrollLeft;
+  };
+
+  const onPointerMove = (e) => {
+    if (!drag.current.active) return;
+    const el = scrollRef.current;
+    const dx = e.clientX - drag.current.startX;
+    if (Math.abs(dx) > 5) drag.current.moved = true;
+    el.scrollLeft = drag.current.scrollLeft - dx;
+  };
+
+  const endDrag = () => {
+    drag.current.active = false;
+  };
+
+  const onClickCapture = (e) => {
+    if (drag.current.moved) {
+      e.preventDefault();
+      e.stopPropagation();
+      drag.current.moved = false;
+    }
+  };
+
   return (
     <section className="px-4 mt-8">
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-peyda font-bold text-sm text-amber-700">
-          محصولات ویژه
+          {title}
         </h2>
-        <span className="font-peyda text-xs text-amber-700">
-          بهترین پیشنهادات روز
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="font-peyda text-xs text-amber-700">
+            {subtitle}
+          </span>
+          {onViewAll ? (
+            <button
+              onClick={onViewAll}
+              className="font-peyda text-xs text-[#E86B42] border border-[#E86B42] rounded-full px-2 py-0.5"
+            >
+              همه
+            </button>
+          ) : null}
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-  {filteredProducts.map((product) => {
-    const qty = getQuantity(product.id);
+      <div
+        ref={scrollRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
+        onClickCapture={onClickCapture}
+        className="flex gap-3 overflow-x-auto no-scrollbar pb-2 cursor-grab active:cursor-grabbing select-none"
+      >
+        {filteredProducts.map((product) => {
+          const qty = getQuantity(product.id);
           return (
             <div
               key={product.id}
-              className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm"
+              className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm w-40 flex-shrink-0"
             >
               <div
-                className="w-full h-36 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
+                className="w-full h-32 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
                 onClick={() => onProductClick && onProductClick(product)}
               >
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-28 h-28 object-contain"
+                  className="w-24 h-24 object-contain"
                 />
               </div>
 
-              <h3 className="font-peyda text-sm font-medium mt-3 text-center min-h-[40px] flex items-center justify-center">
+              <h3 className="font-peyda text-sm font-medium mt-2 text-center min-h-[40px] flex items-center justify-center leading-6">
                 {product.title}
               </h3>
 
-              <div className="font-iranyekan text-center mt-3">
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-xs text-gray-400 line-through">
-                    {product.oldPrice} تومان
-                  </span>
-                  <span className="text-xs bg-red-500 text-white rounded px-1">
-                    {product.discount}
-                  </span>
-                </div>
+              <div className="font-iranyekan text-center mt-2">
+                {product.discount ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-xs text-gray-400 line-through">
+                      {product.oldPrice} تومان
+                    </span>
+                    <span className="text-xs bg-red-500 text-white rounded px-1">
+                      {product.discount}
+                    </span>
+                  </div>
+                ) : null}
                 <span className="font-peyda block text-sm font-bold mt-1">
                   {product.price} تومان
                 </span>
@@ -107,21 +187,21 @@ export default function ProductSection({ cart, setCart, onProductClick,searchQue
               {qty === 0 ? (
                 <button
                   onClick={() => addToCart(product)}
-                  className="font-peyda w-full h-10 mt-4 rounded-full bg-[#E86B42] text-white text-sm font-medium"
+                  className="font-peyda w-full h-10 mt-3 rounded-full bg-[#E86B42] text-white text-sm font-medium"
                 >
                   افزودن به سبد
                 </button>
               ) : (
-                <div className="flex items-center justify-center gap-3 mt-4 h-10">
+                <div className="flex items-center justify-center gap-3 mt-3 h-10">
                   <button
                     onClick={() => increase(product.id)}
                     className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold"
-                  >+</button>
+                    >+</button>
                   <span className="font-peyda text-sm font-bold">{qty}</span>
                   <button
                     onClick={() => decrease(product.id)}
                     className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-lg font-bold"
-                  >-</button>
+                    >-</button>
                   <button
                     onClick={() => removeFromCart(product.id)}
                     className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"

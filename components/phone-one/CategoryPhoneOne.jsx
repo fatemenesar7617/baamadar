@@ -1,47 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CategoryHeader from "./CategoryHeader";
 import MainCategories from "./MainCategories";
-import SubCategories from "./SubCategories";
 import CategoryToolbar from "./CategoryToolbar";
 import ProductList from "./ProductList";
-import BottomNav from "./BottomNav";
 import ProductDialog from "@/components/ProductDialog";
-import CartModal from "./CartModal";
-import OrdersModal from "./OrdersModal";
-import ProfileModal from "./ProfileModal";
 import InlineSearch from "./InlineSearch";
+import { useCart } from "@/components/CartContext";
 
-export default function CategoryPhoneOne({ initialSearchQuery = "", products }) {
+export default function CategoryPhoneOne({ initialSearchQuery = "", initialCategory = null, initialDiscount = false, products }) {
   const router = useRouter();
+  const { cart, setCart } = useCart();
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-  const [cart, setCart] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
-  const [activeFilter, setActiveFilter] = useState(null);
+  const [activeFilter, setActiveFilter] = useState(initialDiscount ? "discount" : null);
   const [sortOption, setSortOption] = useState(null);
-  const [activeTab, setActiveTab] = useState("home");
-  const [ordersOpen, setOrdersOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    if (tab === "home") {
-      router.push("/");
-    } else if (tab === "cart") {
-      setCartOpen(true);
-    } else if (tab === "orders") {
-      setOrdersOpen(true);
-    } else if (tab === "profile") {
-      setProfileOpen(true);
+  useEffect(() => {
+    if (router.query.cat) {
+      setSelectedCategory(router.query.cat);
     }
-  };
+  }, [router.query.cat]);
+
+  useEffect(() => {
+    const productOpen = selectedProduct !== null;
+    if (productOpen) {
+      window.dispatchEvent(new CustomEvent("modal:open", { detail: { open: true } }));
+    } else {
+      window.dispatchEvent(new CustomEvent("modal:close"));
+    }
+  }, [selectedProduct]);
 
   return (
 
@@ -56,7 +50,7 @@ export default function CategoryPhoneOne({ initialSearchQuery = "", products }) 
 
         <CategoryHeader
           cart={cart}
-          onCartClick={() => setCartOpen(true)}
+          onCartClick={() => router.push("/cart")}
           onSearchClick={() => setSearchOpen(true)}
         />
 
@@ -73,12 +67,6 @@ export default function CategoryPhoneOne({ initialSearchQuery = "", products }) 
         <MainCategories
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
-          onSelectSubCategory={setSelectedSubCategory}
-        />
-
-        <SubCategories
-          selectedCategory={selectedCategory}
-          selectedSubCategory={selectedSubCategory}
           onSelectSubCategory={setSelectedSubCategory}
         />
 
@@ -101,8 +89,6 @@ export default function CategoryPhoneOne({ initialSearchQuery = "", products }) 
           products={products}
         />
 
-        <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
-
       </div>
 
 
@@ -113,32 +99,6 @@ export default function CategoryPhoneOne({ initialSearchQuery = "", products }) 
   cart={cart}
   setCart={setCart}
 />
-
-      <CartModal
-        open={cartOpen}
-        onClose={() => {
-          setCartOpen(false);
-          setActiveTab("home");
-        }}
-        cart={cart}
-        setCart={setCart}
-      />
-
-      <OrdersModal
-        open={ordersOpen}
-        onClose={() => {
-          setOrdersOpen(false);
-          setActiveTab("home");
-        }}
-      />
-
-      <ProfileModal
-        open={profileOpen}
-        onClose={() => {
-          setProfileOpen(false);
-          setActiveTab("home");
-        }}
-      />
 
     </>
   );

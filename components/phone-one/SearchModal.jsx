@@ -23,7 +23,7 @@ export default function SearchModal({
       className="
         fixed
         inset-0
-        z-50
+        z-[60]
         flex
         justify-center
         items-start
@@ -31,13 +31,14 @@ export default function SearchModal({
       "
     >
       <div
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 z-40 bg-black/40"
         onClick={onClose}
       />
 
       <div
         className="
           relative
+          z-[60]
           w-[390px]
           h-[calc(100vh-115px)]
           bg-white

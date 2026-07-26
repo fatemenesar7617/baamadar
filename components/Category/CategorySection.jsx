@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import categories from "@/data/categories";
-import CategoryProducts from "./CategoryProducts";
 
-export default function CategorySection({ cart, setCart }) {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+export default function CategorySection() {
+  const router = useRouter();
 
   return (
     <section className="px-4 mt-5">
@@ -21,7 +20,7 @@ export default function CategorySection({ cart, setCart }) {
         {categories.map((item) => (
           <button
             key={item.id}
-            onClick={() => setSelectedCategory(item)}
+            onClick={() => router.push(`/page2?cat=${item.id}`)}
             className="flex flex-col items-center"
           >
             <div className="w-16 h-16 rounded-2xl bg-pink-50 flex items-center justify-center">
@@ -39,15 +38,6 @@ export default function CategorySection({ cart, setCart }) {
           </button>
         ))}
       </div>
-
-      {selectedCategory && (
-        <CategoryProducts
-          category={selectedCategory}
-          onClose={() => setSelectedCategory(null)}
-          cart={cart}
-          setCart={setCart}
-        />
-      )}
     </section>
   );
 }

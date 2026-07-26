@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import CategoryItem from "./CategoryItem";
+import categories from "@/data/categories";
 
 export default function MainCategories({
   selectedCategory,
@@ -15,36 +16,6 @@ export default function MainCategories({
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-
-
-
-  const categories = [
-    {
-      id: "abzaralat",
-      title: "ابزارآلات",
-      image: "/images/abzaralat.svg",
-    },
-    {
-      id: "konservi",
-      title: "کنسروی",
-      image: "/images/konservii.svg",
-    },
-    {
-      id: "labaniyat",
-      title: "لبنیات",
-      image: "/images/labaniyat.svg",
-    },
-    {
-      id: "varzeshi",
-      title: "لوازم ورزشی",
-      image: "/images/lavazemvarzeshi.svg",
-    },
-    {
-      id: "yekbar",
-      title: "یکبار مصرف",
-      image: "/images/yekbarmasraf.svg",
-    },
-  ];
 
 
 

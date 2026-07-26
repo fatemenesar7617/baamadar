@@ -1,22 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function Footer({ onOrdersClick, onProfileClick }) {
+export default function Footer() {
   const router = useRouter();
+  const [hidden, setHidden] = useState(false);
 
-  const handleCartClick = () => {
-    console.log("Cart clicked, router:", router);
-    router.push("/cart");
-  };
+  useEffect(() => {
+    const hide = () => setHidden(true);
+    const show = () => setHidden(false);
+    window.addEventListener("modal:open", hide);
+    window.addEventListener("modal:close", show);
+    return () => {
+      window.removeEventListener("modal:open", hide);
+      window.removeEventListener("modal:close", show);
+    };
+  }, []);
+
+  const handleCartClick = () => router.push("/cart");
+  const handleOrdersClick = () => router.push("/orders");
+  const handleProfileClick = () => router.push("/profile");
 
   return (
-    <footer className="px-4 fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[375px] w-full z-50">
+    <footer
+      className={`px-4 fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[375px] w-full z-[70] transition-transform duration-200 ${
+        hidden ? "translate-y-full -translate-x-1/2" : ""
+      }`}
+    >
       <div className="bg-white border-t border-gray-100 h-16 flex items-center justify-around">
 
         {/* خانه */}
         <div
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => router.push("/")}
           className="flex flex-col items-center cursor-pointer"
         >
           <img src="/icons/menu-home.svg" className="w-5 h-5" />
@@ -34,7 +50,7 @@ export default function Footer({ onOrdersClick, onProfileClick }) {
 
         {/* سفارش ها */}
         <div
-          onClick={onOrdersClick}
+          onClick={handleOrdersClick}
           className="flex flex-col items-center cursor-pointer"
         >
           <img src="/icons/receipt.svg" className="w-5 h-5" />
@@ -43,7 +59,7 @@ export default function Footer({ onOrdersClick, onProfileClick }) {
 
         {/* پروفایل */}
         <div
-          onClick={onProfileClick}
+          onClick={handleProfileClick}
           className="flex flex-col items-center cursor-pointer"
         >
           <img src="/icons/user.svg" className="w-5 h-5" />

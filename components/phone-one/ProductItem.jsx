@@ -138,30 +138,31 @@ export default function ProductItem({
 
 
 
-          <div className="mt-3">
+            <div className="mt-3">
 
 
-            <div className="flex items-center gap-2">
+              {discount ? (
+                <div className="flex items-center gap-2">
 
-              <span className="text-xs text-gray-400 line-through font-peyda">
-                {oldPrice}
-              </span>
-
-
-              <span className="bg-[#D81E34] text-white text-[10px] rounded-full px-2 py-[2px] font-peyda">
-                {discount}
-              </span>
+                  <span className="text-xs text-gray-400 line-through font-peyda">
+                    {oldPrice}
+                  </span>
 
 
-            </div>
+                  <span className="bg-[#D81E34] text-white text-[10px] rounded-full px-2 py-[2px] font-peyda">
+                    {discount}
+                  </span>
+
+                </div>
+              ) : null}
 
 
 
-            <div className="mt-1 flex items-end gap-1">
+              <div className="mt-1 flex items-end gap-1">
 
-              <span className="text-lg font-bold text-[#E86B42] font-peyda">
-                {price}
-              </span>
+                <span className="text-lg font-bold text-[#E86B42] font-peyda">
+                  {price}
+                </span>
 
 
               <span className="text-xs text-orange-500 font-peyda mb-1">
