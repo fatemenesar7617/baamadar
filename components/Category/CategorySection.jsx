@@ -33,7 +33,7 @@ export default function CategorySection() {
               />
             </div>
 
-            <p className="font-peyda font-semibold text-xs text-gray-700 mt-2 text-center whitespace-pre-line transition-colors duration-300 group-hover:text-green-600">
+            <p className="font-peyda font-semibold text-xs text-gray-700 mt-2 text-center whitespace-pre-line transition-colors duration-300 group-hover:text-orange-400">
               {item.title}
             </p>
           </button>

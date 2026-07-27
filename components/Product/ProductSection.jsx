@@ -12,14 +12,17 @@ export default function ProductSection({
   onViewAll = null,
 }) {
   let filteredProducts = searchQuery.trim()
-    ? products.filter((product) =>
-        product.title.includes(searchQuery.trim()) ||
-        product.price.includes(searchQuery.trim())
+    ? products.filter(
+        (product) =>
+          product.title.includes(searchQuery.trim()) ||
+          product.price.includes(searchQuery.trim())
       )
     : products;
 
   if (discountedOnly) {
-    filteredProducts = filteredProducts.filter((product) => !!product.discount);
+    filteredProducts = filteredProducts.filter(
+      (product) => !!product.discount
+    );
   }
 
   const addToCart = (product) => {
@@ -72,23 +75,31 @@ export default function ProductSection({
   };
 
   const scrollRef = useRef(null);
-  const drag = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
+  const drag = useRef({
+    active: false,
+    startX: 0,
+    scrollLeft: 0,
+    moved: false,
+  });
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
+
     const onWheel = (e) => {
       if (e.deltaY !== 0) {
         el.scrollLeft += e.deltaY;
         e.preventDefault();
       }
     };
+
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
   }, []);
 
   const onPointerDown = (e) => {
     if (e.pointerType !== "mouse") return;
+
     const el = scrollRef.current;
     drag.current.active = true;
     drag.current.moved = false;
@@ -98,9 +109,12 @@ export default function ProductSection({
 
   const onPointerMove = (e) => {
     if (!drag.current.active) return;
+
     const el = scrollRef.current;
     const dx = e.clientX - drag.current.startX;
+
     if (Math.abs(dx) > 5) drag.current.moved = true;
+
     el.scrollLeft = drag.current.scrollLeft - dx;
   };
 
@@ -122,10 +136,12 @@ export default function ProductSection({
         <h2 className="font-peyda font-bold text-sm text-amber-700">
           {title}
         </h2>
+
         <div className="flex items-center gap-2">
           <span className="font-peyda text-xs text-amber-700">
             {subtitle}
           </span>
+
           {onViewAll ? (
             <button
               onClick={onViewAll}
@@ -148,6 +164,7 @@ export default function ProductSection({
       >
         {filteredProducts.map((product) => {
           const qty = getQuantity(product.id);
+
           return (
             <div
               key={product.id}
@@ -174,20 +191,21 @@ export default function ProductSection({
                     <span className="text-xs text-gray-400 line-through">
                       {product.oldPrice} تومان
                     </span>
+
                     <span className="text-xs bg-red-500 text-white rounded px-1">
                       {product.discount}
                     </span>
                   </div>
                 ) : null}
+
                 <span className="font-peyda block text-sm font-bold mt-1">
                   {product.price} تومان
                 </span>
               </div>
-
-              {qty === 0 ? (
+                            {qty === 0 ? (
                 <button
                   onClick={() => addToCart(product)}
-                  className="font-peyda w-full h-10 mt-auto rounded-full bg-[#E86B42] text-white text-sm font-medium"
+                  className="font-peyda w-full h-10 mt-auto rounded-full bg-[#E86B42] text-white text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-[#d95a2f] hover:shadow-lg hover:scale-[1.03] active:scale-95"
                 >
                   افزودن به سبد
                 </button>
@@ -195,19 +213,39 @@ export default function ProductSection({
                 <div className="flex items-center justify-center gap-3 mt-3 h-10">
                   <button
                     onClick={() => increase(product.id)}
-                    className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold"
-                    >+</button>
-                  <span className="font-peyda text-sm font-bold">{qty}</span>
+                    className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold cursor-pointer transition-all duration-300 hover:bg-[#d95a2f] hover:scale-110 hover:shadow-md active:scale-95"
+                  >
+                    +
+                  </button>
+
+                  <span className="font-peyda text-sm font-bold">
+                    {qty}
+                  </span>
+
                   <button
                     onClick={() => decrease(product.id)}
-                    className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-lg font-bold"
-                    >-</button>
+                    className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-lg font-bold cursor-pointer transition-all duration-300 hover:bg-gray-300 hover:scale-110 active:scale-95"
+                  >
+                    -
+                  </button>
+
                   <button
                     onClick={() => removeFromCart(product.id)}
-                    className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"
+                    className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-red-500 hover:text-white hover:scale-110 hover:shadow-md active:scale-95"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
                     </svg>
                   </button>
                 </div>

@@ -50,10 +50,37 @@ export default function CartPage() {
   );
 
   const handleCheckout = () => {
-    clearCart();
-    setStep("success");
+  const oldOrders = JSON.parse(localStorage.getItem("orders") || "[]");
+
+  const newOrder = {
+    id: oldOrders.length
+      ? Math.max(...oldOrders.map((o) => o.id), 1003) + 1
+      : 1004,
+
+    date: new Date().toLocaleDateString("fa-IR"),
+
+    status: "در حال پردازش",
+    statusColor: "text-yellow-600 bg-yellow-50",
+
+    items: cartProducts.map((item) => item.title).join("، "),
+
+    total: totalPrice.toLocaleString("fa-IR"),
+
+    customer: {
+      name,
+      phone,
+      address,
+    },
   };
 
+  localStorage.setItem(
+    "orders",
+    JSON.stringify([newOrder, ...oldOrders])
+  );
+
+  clearCart();
+  setStep("success");
+};
   const handleClose = () => {
     setStep("cart");
     setName("");

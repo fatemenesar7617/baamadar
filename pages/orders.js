@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const sampleOrders = [
@@ -30,7 +31,15 @@ const sampleOrders = [
 
 export default function OrdersPage() {
   const router = useRouter();
+const [orders, setOrders] = useState(sampleOrders);
 
+useEffect(() => {
+  const savedOrders = JSON.parse(localStorage.getItem("orders") || "[]");
+
+  if (savedOrders.length > 0) {
+    setOrders([...savedOrders, ...sampleOrders]);
+  }
+}, []);
 
   return (
     <main className="max-w-[390px] mx-auto min-h-screen bg-white flex flex-col pb-20">
@@ -50,7 +59,7 @@ export default function OrdersPage() {
 
       {/* لیست سفارش‌ها */}
       <div className="flex-1 px-4 py-3 space-y-3">
-        {sampleOrders.map((order) => (
+        {orders.map((order) => (
           <div key={order.id} className="bg-gray-50 rounded-2xl p-4 space-y-2">
             <div className="flex items-center justify-between">
               <span className="font-peyda text-xs text-gray-400">

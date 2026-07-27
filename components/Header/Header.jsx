@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 export default function Header({ onCartClick, cartCount = 0 }) {
   const router = useRouter();
@@ -13,11 +12,7 @@ export default function Header({ onCartClick, cartCount = 0 }) {
         <img src="/logos/madarlogo.svg" alt="logo" className="w-24 h-auto"/>
       </div>
       <div className="flex items-center gap-4">
-      <Link href="/login">
-  <button className="text-xs border border-gray-500 text-[#E86B42] rounded-xl px-2 py-1">
-       ورود به سایت
-  </button>
-</Link>
+      
       <div
         onClick={onCartClick}
         className="relative cursor-pointer"
