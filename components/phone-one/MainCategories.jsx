@@ -100,15 +100,7 @@ export default function MainCategories({
       >
 
 
-        <CategoryItem
-          image="/images/hame.png"
-          title="همه"
-          active={selectedCategory === null}
-          onClick={()=>{
-            onSelectCategory(null);
-            onSelectSubCategory?.(null);
-          }}
-        />
+        
 
 
         {categories.map((item)=>(
