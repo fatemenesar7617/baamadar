@@ -1,4 +1,4 @@
-import SliderDots from "./SliderDots";
+
 
 export default function ProductImage({
   product,
@@ -26,7 +26,7 @@ export default function ProductImage({
         "
       />
 
-      <SliderDots/>
+      
 
     </div>
   );

@@ -32,7 +32,8 @@ export default function CategorySection() {
                 className="w-auto h-auto"
               />
             </div>
-            <p className="text-xs text-gray-700 mt-2 text-center whitespace-pre-line">
+
+            <p className="font-peyda font-semibold text-xs text-gray-700 mt-2 text-center whitespace-pre-line">
               {item.title}
             </p>
           </button>

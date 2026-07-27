@@ -1,5 +1,6 @@
 "use client";
 
+
 import ProductSection3 from "./ProductDialog/ProductSection3";
 import ProductBuyBox from "./ProductDialog/ProductBuyBox";
 import { useCart } from "@/components/CartContext";
@@ -26,24 +27,29 @@ export default function ProductDialog({
         flex
         justify-center
         items-start
-        pt-[115px]
+        pt-[45vh]
       "
     >
-      <div className="absolute inset-0 z-40 bg-black/40" onClick={onClose} />
+      {/* بک‌دراپ */}
+      <div
+        className="absolute inset-0 z-40 bg-black/40"
+        onClick={onClose}
+      />
 
+      {/* مودال */}
       <div
         className="
           relative
           z-[60]
           w-[390px]
-          h-[calc(100vh-115px)]
+          h-[55vh]
           bg-white
           rounded-t-[28px]
           shadow-xl
           overflow-hidden
         "
       >
-
+        {/* دکمه بستن */}
         <button
           onClick={onClose}
           className="
@@ -57,53 +63,48 @@ export default function ProductDialog({
             bg-white
             text-gray-700
             text-3xl
-          
           "
         >
           ×
         </button>
 
-
+        {/* محتوای محصول */}
         <div
           className="
             h-full
-            overflow-hidden
-            pb-[140px]
+            overflow-y-auto
+            no-scrollbar
+            pb-[160px]
           "
         >
-
-          <ProductSection3
-            product={product}
-          />
-
+          <ProductSection3 product={product} />
         </div>
 
-
+        {/* باکس خرید */}
         <div
           className="
             absolute
             bottom-0
             left-0
             right-0
-            h-[170px]
+            h-[150px]
             bg-white
             z-[80]
             px-4
-            pb-[80px]
+            pb-4
+            border-t
+            flex
+            items-center
+            border-gray-100
           "
         >
-
           <ProductBuyBox
             product={product}
             cart={cart}
             setCart={setCart}
           />
-
         </div>
-
-
       </div>
-
     </div>
   );
 }

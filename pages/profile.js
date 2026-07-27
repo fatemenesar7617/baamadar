@@ -11,17 +11,10 @@ const menuItems = [
 export default function ProfilePage() {
   const router = useRouter();
 
-  useEffect(() => {
-    window.dispatchEvent(
-      new CustomEvent("modal:open", { detail: { open: true } })
-    );
-    return () => {
-      window.dispatchEvent(new CustomEvent("modal:close"));
-    };
-  }, []);
+
 
   return (
-    <main className="max-w-[390px] mx-auto min-h-screen bg-white flex flex-col">
+    <main className="max-w-[390px] mx-auto min-h-screen bg-white flex flex-col pb-20">
       {/* هدر */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100">
         <button

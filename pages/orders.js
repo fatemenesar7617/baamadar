@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import { useRouter } from "next/router";
 
 const sampleOrders = [
@@ -31,17 +31,9 @@ const sampleOrders = [
 export default function OrdersPage() {
   const router = useRouter();
 
-  useEffect(() => {
-    window.dispatchEvent(
-      new CustomEvent("modal:open", { detail: { open: true } })
-    );
-    return () => {
-      window.dispatchEvent(new CustomEvent("modal:close"));
-    };
-  }, []);
 
   return (
-    <main className="max-w-[390px] mx-auto min-h-screen bg-white flex flex-col">
+    <main className="max-w-[390px] mx-auto min-h-screen bg-white flex flex-col pb-20">
       {/* هدر */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100">
         <button
@@ -57,7 +49,7 @@ export default function OrdersPage() {
       </div>
 
       {/* لیست سفارش‌ها */}
-      <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+      <div className="flex-1 px-4 py-3 space-y-3">
         {sampleOrders.map((order) => (
           <div key={order.id} className="bg-gray-50 rounded-2xl p-4 space-y-2">
             <div className="flex items-center justify-between">

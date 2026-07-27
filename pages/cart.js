@@ -25,12 +25,6 @@ export default function CartPage() {
     cartCount,
   } = useCart();
 
-  useEffect(() => {
-    window.dispatchEvent(new CustomEvent("modal:open", { detail: { open: true } }));
-    return () => {
-      window.dispatchEvent(new CustomEvent("modal:close"));
-    };
-  }, []);
 
   const [step, setStep] = useState("cart");
   const [name, setName] = useState("");
@@ -69,7 +63,7 @@ export default function CartPage() {
   };
 
   return (
-    <main className="max-w-[390px] mx-auto min-h-screen bg-white flex flex-col">
+    <main className="max-w-[390px] mx-auto min-h-screen bg-white flex flex-col pb-20">
       {/* هدر */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100">
         <button
@@ -105,54 +99,83 @@ export default function CartPage() {
                 </button>
               </div>
             ) : (
-              <div className="space-y-3">
-                {cartProducts.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center gap-3 bg-gray-50 rounded-2xl p-3"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-16 h-16 object-contain"
-                    />
-                    <div className="flex-1 text-right">
-                      <p className="font-peyda text-sm text-[#2F2F2F] leading-6">
-                        {item.title}
-                      </p>
-                      <p className="font-peyda text-sm font-bold text-[#E86B42] mt-1">
-                        {item.price || item.newPrice}
-                        <span className="mr-1 text-xs text-orange-500">
-                          تومان
-                        </span>
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="w-8 h-8 rounded-full bg-red-50 text-red-400 flex items-center justify-center hover:bg-red-100 transition-colors"
+<div className="flex flex-row gap-3 overflow-x-auto overflow-y-hidden no-scrollbar pb-2">
+                  {cartProducts.map((item) => (
+                    <div
+                      key={item.id}
+                      className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm w-36 flex-shrink-0 h-64 flex flex-col overflow-hidden"
+                    >
+                      <div className="flex-1 flex flex-col">
+                      <div
+                        className="w-full h-24 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
+                        onClick={() => router.push(`/product/${item.id}`)}
                       >
-                        <img src="/icons/trash.svg" className="w-4 h-4" />
-                      </button>
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-20 h-20 object-contain"
+                        />
+                      </div>
+
+                      <h3 className="font-peyda text-xs font-medium mt-1 text-center min-h-[28px] flex items-center justify-center leading-5">
+                        {item.title}
+                      </h3>
+
+                      <div className="font-iranyekan text-center mt-1">
+                        <span className="font-peyda block text-xs font-bold mt-1">
+                          {item.price || item.newPrice} تومان
+                        </span>
+                      </div>
+                    </div>
+
+                    {item.quantity === 1 ? (
                       <button
                         onClick={() => increase(item.id)}
-                        className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold"
+                        className="font-peyda w-full h-8 mt-auto rounded-full bg-[#E86B42] text-white text-xs font-medium"
                       >
-                        +
+                        افزودن به سبد
                       </button>
-                      <span className="font-peyda text-sm w-5 text-center">
-                        {item.quantity}
-                      </span>
-                      <button
-                        onClick={() => decrease(item.id)}
-                        className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-lg font-bold"
-                      >
-                        -
-                      </button>
+                    ) : (
+                      <div className="flex items-center justify-center gap-2 mt-2 h-8">
+                        <button
+                          onClick={() => increase(item.id)}
+                          className="w-7 h-7 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-sm font-bold"
+                        >
+                          +
+                        </button>
+                        <span className="font-peyda text-xs font-bold">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => decrease(item.id)}
+                          className="w-7 h-7 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-sm font-bold"
+                        >
+                          -
+                        </button>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="w-7 h-7 rounded-full bg-red-100 text-red-500 flex items-center justify-center"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-3 h-3"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    )}
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
             )}
           </div>
 

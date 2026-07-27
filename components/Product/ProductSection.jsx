@@ -151,7 +151,7 @@ export default function ProductSection({
           return (
             <div
               key={product.id}
-              className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm w-40 flex-shrink-0"
+              className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm w-40 flex-shrink-0 flex flex-col"
             >
               <div
                 className="w-full h-32 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
@@ -187,7 +187,7 @@ export default function ProductSection({
               {qty === 0 ? (
                 <button
                   onClick={() => addToCart(product)}
-                  className="font-peyda w-full h-10 mt-3 rounded-full bg-[#E86B42] text-white text-sm font-medium"
+                  className="font-peyda w-full h-10 mt-auto rounded-full bg-[#E86B42] text-white text-sm font-medium"
                 >
                   افزودن به سبد
                 </button>
