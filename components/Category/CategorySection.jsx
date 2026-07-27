@@ -21,19 +21,19 @@ export default function CategorySection() {
           <button
             key={item.id}
             onClick={() => router.push(`/page2?cat=${item.id}`)}
-            className="flex flex-col items-center"
+            className="group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-1"
           >
-            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 group-hover:bg-green-50">
               <Image
                 src={item.image}
                 alt={item.title}
                 width={32}
                 height={32}
-                className="w-auto h-auto"
+                className="w-auto h-auto transition-transform duration-300 group-hover:scale-110"
               />
             </div>
 
-            <p className="font-peyda font-semibold text-xs text-gray-700 mt-2 text-center whitespace-pre-line">
+            <p className="font-peyda font-semibold text-xs text-gray-700 mt-2 text-center whitespace-pre-line transition-colors duration-300 group-hover:text-green-600">
               {item.title}
             </p>
           </button>
