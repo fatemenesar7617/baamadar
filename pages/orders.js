@@ -46,11 +46,12 @@ useEffect(() => {
       {/* هدر */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100">
         <button
-          onClick={() => router.back()}
-          className="text-gray-500 text-2xl"
-        >
-          ×
-        </button>
+  onClick={() => router.back()}
+  className="cursor-pointer w-10 h-10 flex items-center justify-center text-gray-500 text-2xl hover:text-[#E86B42] transition-colors duration-200"
+  aria-label="بستن"
+>
+  ×
+</button>
         <p className="font-peyda font-semibold text-base text-[#2F2F2F]">
           سفارش‌های من
         </p>

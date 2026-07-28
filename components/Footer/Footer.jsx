@@ -23,7 +23,8 @@ export default function Footer() {
 
   const currentPath = router.pathname;
 
-const isActive = (path) => currentPath === path;
+  const isActive = (path) => currentPath === path;
+
   const handleCartClick = () => router.push("/cart");
   const handleOrdersClick = () => router.push("/orders");
   const handleProfileClick = () => router.push("/profile");
@@ -39,7 +40,7 @@ const isActive = (path) => currentPath === path;
         {/* خانه */}
         <button
           onClick={() => router.push("/")}
-          className={`relative flex-1 h-full flex flex-col items-center justify-center ${
+          className={`cursor-pointer relative flex-1 h-full flex flex-col items-center justify-center ${
             isActive("/") ? "text-[#E86B42]" : "text-gray-700"
           }`}
         >
@@ -61,7 +62,7 @@ const isActive = (path) => currentPath === path;
         {/* سبد خرید */}
         <button
           onClick={handleCartClick}
-          className={`relative flex-1 h-full flex flex-col items-center justify-center ${
+          className={`cursor-pointer relative flex-1 h-full flex flex-col items-center justify-center ${
             isActive("/cart") ? "text-[#E86B42]" : "text-gray-700"
           }`}
         >
@@ -83,7 +84,7 @@ const isActive = (path) => currentPath === path;
         {/* سفارش‌ها */}
         <button
           onClick={handleOrdersClick}
-          className={`relative flex-1 h-full flex flex-col items-center justify-center ${
+          className={`cursor-pointer relative flex-1 h-full flex flex-col items-center justify-center ${
             isActive("/orders") ? "text-[#E86B42]" : "text-gray-700"
           }`}
         >
@@ -105,7 +106,7 @@ const isActive = (path) => currentPath === path;
         {/* پروفایل */}
         <button
           onClick={handleProfileClick}
-          className={`relative flex-1 h-full flex flex-col items-center justify-center ${
+          className={`cursor-pointer relative flex-1 h-full flex flex-col items-center justify-center ${
             isActive("/profile") ? "text-[#E86B42]" : "text-gray-700"
           }`}
         >

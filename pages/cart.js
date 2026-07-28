@@ -94,11 +94,12 @@ export default function CartPage() {
       {/* هدر */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100">
         <button
-          onClick={() => router.back()}
-          className="text-gray-500 text-2xl"
-        >
-          {step === "cart" ? "×" : "→"}
-        </button>
+  onClick={() => router.back()}
+  className="cursor-pointer text-gray-500 text-2xl w-10 h-10 flex items-center justify-center hover:text-[#E86B42] transition-colors duration-200"
+  aria-label="بستن صفحه"
+>
+  {step === "cart" ? "×" : "→"}
+</button>
         <p className="font-peyda font-semibold text-base text-[#2F2F2F]">
           {step === "cart" && `سبد خرید (${cartProducts.length})`}
           {step === "shipping" && "اطلاعات ارسال"}

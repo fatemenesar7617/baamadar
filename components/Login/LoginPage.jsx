@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import LoginLogo from "./LoginLogo";
 import PhoneInput from "./PhoneInput";
@@ -9,6 +10,8 @@ import LoginButton from "./LoginButton";
 import LoginIllustration from "./LoginIllustration";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [step, setStep] = useState("phone");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
@@ -47,6 +50,18 @@ export default function LoginPage() {
       setStep("otp");
     } else if (step === "otp") {
       setIsVerified(true);
+
+      // ذخیره وضعیت ورود
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          isLoggedIn: true,
+          phone: phoneNumber,
+        })
+      );
+
+      // انتقال به پروفایل
+      router.push("/profile");
     }
   }
 
@@ -78,10 +93,9 @@ export default function LoginPage() {
   }, [step]);
 
   return (
-        <div className="min-h-screen flex items-center justify-center bg-white rtl">
+    
+    <div className="min-h-screen flex items-center justify-center bg-white rtl">
       <div className="w-[350px] h-[700px] flex flex-col items-center relative overflow-hidden">
-
-        
 
         <LoginLogo />
 
@@ -176,12 +190,12 @@ export default function LoginPage() {
 
         </div>
 
-        
-<div className="absolute bottom-6 left-0 w-full flex justify-center">
+        <div className="absolute bottom-6 left-0 w-full flex justify-center">
           <LoginIllustration
             type={step === "phone" ? "bread" : "basket"}
           />
         </div>
+
       </div>
     </div>
   );

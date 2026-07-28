@@ -164,3 +164,10 @@
 .animate-slide-up {
   animation: slide-up 0.3s ease-out;
 }
+.cursor-pointer {
+  cursor: pointer !important;
+}
+header img,
+header svg {
+  cursor: pointer;
+}

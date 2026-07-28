@@ -59,6 +59,8 @@ export default function ProductSection({
   const decrease = (id) => {
     const item = cart.find((i) => i.id === id);
 
+    if (!item) return;
+
     if (item.quantity === 1) {
       setCart(cart.filter((i) => i.id !== id));
       return;
@@ -175,131 +177,138 @@ export default function ProductSection({
   };
 
   return (
-    <section className="px-4 mt-8">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="font-peyda font-bold text-sm text-amber-700">
-          {title}
-        </h2>
+  <section className="px-4 mt-8">
+    <div className="flex justify-between items-center mb-4">
+      <h2 className="font-peyda font-bold text-sm text-amber-700">
+        {title}
+      </h2>
 
-        <div className="flex items-center gap-2">
-          <span className="font-peyda text-xs text-amber-700">
-            {subtitle}
-          </span>
+      <div className="flex items-center gap-2">
+        <span className="font-peyda text-xs text-amber-700">
+          {subtitle}
+        </span>
 
-          {onViewAll ? (
-            <button
-              onClick={onViewAll}
-              className="font-peyda text-xs text-[#E86B42] border border-[#E86B42] rounded-full px-2 py-0.5"
-            >
-              همه
-            </button>
-          ) : null}
-
-        </div>
+        {onViewAll && (
+          <button
+            onClick={onViewAll}
+            className="font-peyda text-xs text-[#E86B42] border border-[#E86B42] rounded-full px-2 py-0.5"
+          >
+            همه
+          </button>
+        )}
       </div>
+    </div>
 
-      <div
-        ref={scrollRef}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerLeave={endDrag}
-        onClickCapture={onClickCapture}
-        className="flex gap-3 overflow-x-auto no-scrollbar pb-2 cursor-grab active:cursor-grabbing select-none"
-      >
-        {filteredProducts.map((product) => {
-          const qty = getQuantity(product.id);
+    <div
+      ref={scrollRef}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerLeave={endDrag}
+      onClickCapture={onClickCapture}
+      className="flex gap-3 overflow-x-auto no-scrollbar pb-2 cursor-grab active:cursor-grabbing select-none"
+    >
+      {filteredProducts.map((product) => {
+        const qty = getQuantity(product.id);
 
-          return (
-                        <div
-              key={product.id}
-              className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm w-40 flex-shrink-0 flex flex-col"
+        return (
+          <div
+            key={product.id}
+            className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm w-40 flex-shrink-0 flex flex-col"
+          >
+            <div
+              className="w-full h-32 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
+              onClick={() => onProductClick && onProductClick(product)}
             >
-              <div
-                className="w-full h-32 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
-                onClick={() => onProductClick && onProductClick(product)}
-              >
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-24 h-24 object-contain"
-                />
-              </div>
+              <img
+                src={product.image}
+                alt={product.title}
+                className="w-24 h-24 object-contain"
+              />
+            </div>
 
-              <h3 className="font-peyda text-sm font-medium mt-2 text-center min-h-[40px] flex items-center justify-center leading-6">
-                {product.title}
-              </h3>
+            <h3 className="font-peyda text-sm font-medium mt-2 text-center h-14 flex items-center justify-center leading-6">
+              {product.title}
+            </h3>
 
-              <div className="font-iranyekan text-center mt-2">
-                {product.discount ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="text-xs text-gray-400 line-through">
-                      {product.oldPrice} تومان
-                    </span>
+            <div className="font-iranyekan text-center mt-2">
+              {product.discount && (
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-xs text-gray-400 line-through">
+                    {product.oldPrice} تومان
+                  </span>
 
-                    <span className="text-xs bg-red-500 text-white rounded px-1">
-                      {product.discount}
-                    </span>
-                  </div>
-                ) : null}
+                  <span className="text-xs bg-red-500 text-white rounded px-1">
+                    {product.discount}
+                  </span>
+                </div>
+              )}
 
-                <span className="font-peyda block text-sm font-bold mt-1">
-                  {product.price} تومان
-                </span>
-              </div>
+              <span className="font-peyda block text-sm font-bold mt-1">
+                {product.price} تومان
+              </span>
+            </div>
 
+            <div className="mt-auto pt-3 h-14 flex items-center">
               {qty === 0 ? (
                 <button
                   onClick={() => addToCart(product)}
-                  className="font-peyda w-full h-10 mt-auto rounded-full bg-[#E86B42] text-white text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-[#d95a2f] hover:shadow-lg hover:scale-[1.03] active:scale-95"
+                  className="font-peyda w-full h-10 rounded-full bg-[#E86B42] text-white text-sm font-medium transition-all duration-300 hover:bg-[#d95a2f]"
                 >
                   افزودن به سبد
                 </button>
               ) : (
-                <div className="flex items-center justify-center gap-3 mt-3 h-10">
+                <div className="w-full h-10 flex items-center justify-between">
+
+                  {/* دکمه مثبت */}
                   <button
                     onClick={() => increase(product.id)}
-                    className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold cursor-pointer transition-all duration-300 hover:bg-[#d95a2f] hover:scale-110 hover:shadow-md active:scale-95"
+                    className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold"
                   >
                     +
                   </button>
 
+                  {/* تعداد */}
                   <span className="font-peyda text-sm font-bold">
                     {qty}
                   </span>
 
-                  <button
-                    onClick={() => decrease(product.id)}
-                    className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-lg font-bold cursor-pointer transition-all duration-300 hover:bg-gray-300 hover:scale-110 active:scale-95"
-                  >
-                    -
-                  </button>
-
-                  <button
-                    onClick={() => removeFromCart(product.id)}
-                    className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-red-500 hover:text-white hover:scale-110 hover:shadow-md active:scale-95"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-4 h-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
+                  {/* منفی یا سطل */}
+                  {qty > 1 ? (
+                    <button
+                      onClick={() => decrease(product.id)}
+                      className="w-8 h-8 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center text-lg font-bold"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                  </button>
+                      -
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => removeFromCart(product.id)}
+                      className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
+                  )}
                 </div>
               )}
             </div>
-                      );
-        })}
-      </div>
-    </section>
-  );
+          </div>
+        );
+      })}
+    </div>
+  </section>
+);
 }
