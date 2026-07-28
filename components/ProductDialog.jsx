@@ -1,6 +1,5 @@
 "use client";
 
-
 import ProductSection3 from "./ProductDialog/ProductSection3";
 import ProductBuyBox from "./ProductDialog/ProductBuyBox";
 import { useCart } from "@/components/CartContext";
@@ -25,77 +24,69 @@ export default function ProductDialog({
         inset-0
         z-[60]
         flex
+        items-end
         justify-center
-        items-start
-        pt-[45vh]
       "
     >
-      {/* بک‌دراپ */}
+      {/* Backdrop */}
       <div
-        className="absolute inset-0 z-40 bg-black/40"
+        className="absolute inset-0 bg-black/40"
         onClick={onClose}
       />
 
-      {/* مودال */}
+      {/* Modal */}
       <div
         className="
           relative
           z-[60]
-          w-[390px]
-          h-[55vh]
+          w-full
+          max-w-[390px]
           bg-white
-          rounded-t-[28px]
-          shadow-xl
-          overflow-hidden
+          rounded-t-[32px]
+          shadow-2xl
         "
       >
-        {/* دکمه بستن */}
+        {/* Close Button */}
         <button
           onClick={onClose}
           className="
             absolute
             top-4
             right-4
-            z-[100]
-            w-10
+            z-50
+            flex
             h-10
+            w-10
+            items-center
+            justify-center
             rounded-full
             bg-white
-            text-gray-700
             text-3xl
+            text-gray-700
           "
         >
           ×
         </button>
 
-        {/* محتوای محصول */}
-        <div
-          className="
-            h-full
-            overflow-y-auto
-            no-scrollbar
-            pb-[160px]
-          "
-        >
+        {/* Content */}
+        <div className="pb-[135px]">
           <ProductSection3 product={product} />
         </div>
 
-        {/* باکس خرید */}
+        {/* Buy Box */}
         <div
           className="
             absolute
             bottom-0
             left-0
             right-0
-            h-[150px]
             bg-white
-            z-[80]
-            px-4
-            pb-4
             border-t
-            flex
-            items-center
             border-gray-100
+            px-4
+            pt-3
+            pb-5
+            rounded-t-[24px]
           "
         >
           <ProductBuyBox
