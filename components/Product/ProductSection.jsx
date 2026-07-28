@@ -27,6 +27,7 @@ export default function ProductSection({
 
   const addToCart = (product) => {
     const exists = cart.find((item) => item.id === product.id);
+
     if (exists) {
       setCart(
         cart.map((item) =>
@@ -57,10 +58,12 @@ export default function ProductSection({
 
   const decrease = (id) => {
     const item = cart.find((i) => i.id === id);
+
     if (item.quantity === 1) {
       setCart(cart.filter((i) => i.id !== id));
       return;
     }
+
     setCart(
       cart.map((item) =>
         item.id === id
@@ -75,11 +78,14 @@ export default function ProductSection({
   };
 
   const scrollRef = useRef(null);
+
   const drag = useRef({
     active: false,
     startX: 0,
+    startY: 0,
     scrollLeft: 0,
     moved: false,
+    horizontal: false,
   });
 
   useEffect(() => {
@@ -87,23 +93,46 @@ export default function ProductSection({
     if (!el) return;
 
     const onWheel = (e) => {
-      if (e.deltaY !== 0) {
+      const atLeft = el.scrollLeft <= 0;
+
+      const atRight =
+        Math.ceil(el.scrollLeft + el.clientWidth) >=
+        el.scrollWidth;
+
+      if (e.shiftKey) {
+        el.scrollLeft += e.deltaY;
+        e.preventDefault();
+        return;
+      }
+
+      if (
+        (e.deltaY > 0 && !atRight) ||
+        (e.deltaY < 0 && !atLeft)
+      ) {
         el.scrollLeft += e.deltaY;
         e.preventDefault();
       }
     };
 
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
+    el.addEventListener("wheel", onWheel, {
+      passive: false,
+    });
+
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+    };
   }, []);
 
   const onPointerDown = (e) => {
     if (e.pointerType !== "mouse") return;
 
     const el = scrollRef.current;
+
     drag.current.active = true;
     drag.current.moved = false;
+    drag.current.horizontal = false;
     drag.current.startX = e.clientX;
+    drag.current.startY = e.clientY;
     drag.current.scrollLeft = el.scrollLeft;
   };
 
@@ -111,15 +140,30 @@ export default function ProductSection({
     if (!drag.current.active) return;
 
     const el = scrollRef.current;
+
     const dx = e.clientX - drag.current.startX;
+    const dy = e.clientY - drag.current.startY;
 
-    if (Math.abs(dx) > 5) drag.current.moved = true;
+    if (!drag.current.horizontal) {
+      if (Math.abs(dy) > Math.abs(dx)) {
+        return;
+      }
 
-    el.scrollLeft = drag.current.scrollLeft - dx;
+      if (Math.abs(dx) > 5) {
+        drag.current.horizontal = true;
+        drag.current.moved = true;
+      }
+    }
+
+    if (drag.current.horizontal) {
+      e.preventDefault();
+      el.scrollLeft = drag.current.scrollLeft - dx;
+    }
   };
 
   const endDrag = () => {
     drag.current.active = false;
+    drag.current.horizontal = false;
   };
 
   const onClickCapture = (e) => {
@@ -150,6 +194,7 @@ export default function ProductSection({
               همه
             </button>
           ) : null}
+
         </div>
       </div>
 
@@ -166,7 +211,7 @@ export default function ProductSection({
           const qty = getQuantity(product.id);
 
           return (
-            <div
+                        <div
               key={product.id}
               className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm w-40 flex-shrink-0 flex flex-col"
             >
@@ -202,7 +247,8 @@ export default function ProductSection({
                   {product.price} تومان
                 </span>
               </div>
-                            {qty === 0 ? (
+
+              {qty === 0 ? (
                 <button
                   onClick={() => addToCart(product)}
                   className="font-peyda w-full h-10 mt-auto rounded-full bg-[#E86B42] text-white text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-[#d95a2f] hover:shadow-lg hover:scale-[1.03] active:scale-95"
@@ -251,7 +297,7 @@ export default function ProductSection({
                 </div>
               )}
             </div>
-          );
+                      );
         })}
       </div>
     </section>
