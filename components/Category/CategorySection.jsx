@@ -23,8 +23,8 @@ export default function CategorySection() {
             onClick={() => router.push(`/page2?cat=${item.id}`)}
             className="group flex flex-col items-center cursor-pointer transition-all duration-300 hover:-translate-y-1"
           >
-            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 group-hover:bg-green-50">
-              <Image
+            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 group-hover:bg-orange-100">
+        <Image
                 src={item.image}
                 alt={item.title}
                 width={32}
