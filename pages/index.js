@@ -27,7 +27,7 @@ export default function Home() {
   }, [dialogOpen]);
 
   return (
-    <main className="max-w-[375px] mx-auto min-h-screen bg-white pb-20">
+    <main className="max-w-[390px] mx-auto min-h-screen bg-white pb-20">
   
       <Header onCartClick={() => router.push("/cart")} cartCount={cartCount} />
       <SearchBox query={searchQuery} setQuery={setSearchQuery} />
@@ -59,13 +59,15 @@ export default function Home() {
       />
       <BottomBaner />
 
-      <ProductDialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        product={selectedProduct}
-        cart={cart}
-        setCart={setCart}
-      />
+     <div className="relative w-full">
+  <ProductDialog
+    open={dialogOpen}
+    onClose={() => setDialogOpen(false)}
+    product={selectedProduct}
+    cart={cart}
+    setCart={setCart}
+  />
+</div>
     </main>
   );
 }

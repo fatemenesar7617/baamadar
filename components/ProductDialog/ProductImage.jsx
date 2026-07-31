@@ -7,12 +7,12 @@ export default function ProductImage({
   return (
     <div className="
       mt-4
-      rounded-[24px]
+      rounded-[16px]
       border
       border-[#EEEEEE]
       bg-white
-      px-5
-      py-5
+      px-3
+      py-3
     ">
 
       <img
@@ -20,14 +20,13 @@ export default function ProductImage({
         alt={product?.title}
         className="
           block
-          h-[130px]
+          h-[100px]
           w-full
           object-contain
         "
       />
-
       
-
+      
     </div>
   );
 }

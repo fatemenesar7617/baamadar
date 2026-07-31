@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useCart } from "@/components/CartContext";
+
 export default function ProductItem({
   product,
   image,
@@ -7,22 +10,22 @@ export default function ProductItem({
   discount,
   hasSupport,
   supportPrice,
-  cart,
-  setCart,
+  cart: cartProp,
+  setCart: setCartProp,
   onProductClick,
 }) {
-
+  const cartCtx = useCart();
+  const cart = cartProp ?? cartCtx.cart;
+  const setCart = setCartProp ?? cartCtx.setCart;
+  const [added, setAdded] = useState(false);
 
   const cartItem = cart.find(
     (item) => item.id === product.id
   );
 
-
   const quantity = cartItem ? cartItem.quantity : 0;
 
-
-
-  const addToCart = () => {
+  const handleAddToCart = () => {
     const exists = cart.find((item) => item.id === product.id);
     if (exists) {
       setCart(
@@ -35,12 +38,11 @@ export default function ProductItem({
     } else {
       setCart([...cart, { id: product.id, quantity: 1 }]);
     }
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
   };
 
-
-
   const increase = () => {
-
     setCart(
       cart.map((item) =>
         item.id === product.id
@@ -51,20 +53,13 @@ export default function ProductItem({
           : item
       )
     );
-
   };
 
-
-
   const decrease = () => {
-
     if (quantity === 1) {
-
       removeFromCart();
-
       return;
     }
-
 
     setCart(
       cart.map((item) =>
@@ -76,22 +71,15 @@ export default function ProductItem({
           : item
       )
     );
-
   };
 
-
-
   const removeFromCart = () => {
-
     setCart(
       cart.filter(
         (item) => item.id !== product.id
       )
     );
-
   };
-
-
 
   return (
 
@@ -105,6 +93,8 @@ export default function ProductItem({
         p-4
         mb-3
         cursor-pointer
+        transition-shadow
+        hover:shadow-md
       "
     >
 
@@ -199,6 +189,7 @@ export default function ProductItem({
                   e.stopPropagation();
                   increase();
                 }}
+                className="w-8 h-8 rounded-full text-[#E86B42] flex items-center justify-center hover:bg-[#fde8e0] transition-colors cursor-pointer"
               >
 
                 <img
@@ -217,20 +208,25 @@ export default function ProductItem({
 
 
 
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  decrease();
-                }}
-              >
+              {quantity > 1 && (
 
-                <img
-                  src="/icons/minus.svg"
-                  alt="minus"
-                  className="w-5 h-5"
-                />
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    decrease();
+                  }}
+                  className="w-8 h-8 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center hover:bg-gray-300 transition-colors cursor-pointer"
+                >
 
-              </button>
+                  <img
+                    src="/icons/minus.svg"
+                    alt="minus"
+                    className="w-5 h-5"
+                  />
+
+                </button>
+
+              )}
 
 
 
@@ -239,6 +235,7 @@ export default function ProductItem({
                   e.stopPropagation();
                   removeFromCart();
                 }}
+                className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center hover:bg-red-200 transition-colors cursor-pointer"
               >
 
                 <img
@@ -259,19 +256,24 @@ export default function ProductItem({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                addToCart();
+                handleAddToCart();
               }}
-              className="
-                bg-[#FFF1EB]
-                text-[#E86B42]
+              className={`
                 rounded-full
                 px-5
                 py-2
                 text-sm
                 font-peyda
-              "
+                transition-all
+                duration-300
+                cursor-pointer
+                ${added
+                  ? "bg-green-500 text-white scale-105 shadow-lg shadow-green-500/40"
+                  : "bg-[#FFF1EB] text-[#E86B42] hover:bg-[#fde8e0] active:scale-95 shadow-sm"
+                }
+              `}
             >
-              افزودن به سبد
+              {added ? "✓ افزوده شد" : "افزودن به سبد"}
             </button>
 
 
@@ -296,7 +298,7 @@ export default function ProductItem({
             mt-4
             -mx-4
             -mb-4
-            bg-[#FFF4EF]
+            
             px-4
             py-3
             flex
@@ -306,7 +308,7 @@ export default function ProductItem({
         >
 
 
-          <span className="font-peyda text-xs text-[#E86B42]">
+          <span className="font-peyda font-semibold text-xs text-[#E86B42]">
             قیمت با حامی کارت
           </span>
 

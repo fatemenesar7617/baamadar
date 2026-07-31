@@ -1,5 +1,6 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import products from "@/data/products";
+import { useCart } from "@/components/CartContext";
 
 export default function ProductSection({
   cart,
@@ -11,6 +12,11 @@ export default function ProductSection({
   discountedOnly = false,
   onViewAll = null,
 }) {
+  const cartCtx = useCart();
+  const cartState = cart ?? cartCtx.cart;
+  const setCartState = setCart ?? cartCtx.setCart;
+  const [addedId, setAddedId] = useState(null);
+
   let filteredProducts = searchQuery.trim()
     ? products.filter(
         (product) =>
@@ -26,29 +32,31 @@ export default function ProductSection({
   }
 
   const addToCart = (product) => {
-    const exists = cart.find((item) => item.id === product.id);
+    const exists = cartState.find((item) => item.id === product.id);
 
     if (exists) {
-      setCart(
-        cart.map((item) =>
+      setCartState(
+        cartState.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         )
       );
     } else {
-      setCart([...cart, { id: product.id, quantity: 1 }]);
+      setCartState([...cartState, { id: product.id, quantity: 1 }]);
     }
+    setAddedId(product.id);
+    setTimeout(() => setAddedId(null), 1500);
   };
 
   const getQuantity = (id) => {
-    const item = cart.find((i) => i.id === id);
+    const item = cartState.find((i) => i.id === id);
     return item ? item.quantity : 0;
   };
 
   const increase = (id) => {
-    setCart(
-      cart.map((item) =>
+    setCartState(
+      cartState.map((item) =>
         item.id === id
           ? { ...item, quantity: item.quantity + 1 }
           : item
@@ -57,17 +65,17 @@ export default function ProductSection({
   };
 
   const decrease = (id) => {
-    const item = cart.find((i) => i.id === id);
+    const item = cartState.find((i) => i.id === id);
 
     if (!item) return;
 
     if (item.quantity === 1) {
-      setCart(cart.filter((i) => i.id !== id));
+      setCartState(cartState.filter((i) => i.id !== id));
       return;
     }
 
-    setCart(
-      cart.map((item) =>
+    setCartState(
+      cartState.map((item) =>
         item.id === id
           ? { ...item, quantity: item.quantity - 1 }
           : item
@@ -76,7 +84,7 @@ export default function ProductSection({
   };
 
   const removeFromCart = (id) => {
-    setCart(cart.filter((i) => i.id !== id));
+    setCartState(cartState.filter((i) => i.id !== id));
   };
 
   const scrollRef = useRef(null);
@@ -191,7 +199,7 @@ export default function ProductSection({
         {onViewAll && (
           <button
             onClick={onViewAll}
-            className="font-peyda text-xs text-[#E86B42] border border-[#E86B42] rounded-full px-2 py-0.5"
+            className="font-peyda text-xs text-[#E86B42] border border-[#E86B42] rounded-full px-2 py-0.5 cursor-pointer"
           >
             همه
           </button>
@@ -253,38 +261,38 @@ export default function ProductSection({
               {qty === 0 ? (
                 <button
                   onClick={() => addToCart(product)}
-                  className="font-peyda w-full h-10 rounded-full bg-[#E86B42] text-white text-sm font-medium transition-all duration-300 hover:bg-[#d95a2f]"
+                  className={`font-peyda w-full h-10 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+                    addedId === product.id
+                      ? "bg-green-500 text-white scale-105 shadow-lg shadow-green-500/40"
+                      : "bg-[#E86B42] text-white hover:bg-[#d95a2f] shadow-lg shadow-[#E86B42]/30 active:scale-95"
+                  }`}
                 >
-                  افزودن به سبد
+                  {addedId === product.id ? "✓ افزوده شد" : "افزودن به سبد"}
                 </button>
               ) : (
                 <div className="w-full h-10 flex items-center justify-between">
-
-                  {/* دکمه مثبت */}
                   <button
                     onClick={() => increase(product.id)}
-                    className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold"
+                    className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold hover:bg-[#d95a2f] transition-colors cursor-pointer"
                   >
                     +
                   </button>
 
-                  {/* تعداد */}
                   <span className="font-peyda text-sm font-bold">
                     {qty}
                   </span>
 
-                  {/* منفی یا سطل */}
                   {qty > 1 ? (
                     <button
                       onClick={() => decrease(product.id)}
-                      className="w-8 h-8 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center text-lg font-bold"
+                      className="w-8 h-8 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center text-lg font-bold hover:bg-gray-300 transition-colors cursor-pointer"
                     >
                       -
                     </button>
                   ) : (
                     <button
                       onClick={() => removeFromCart(product.id)}
-                      className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"
+                      className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center hover:bg-red-200 transition-colors cursor-pointer"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

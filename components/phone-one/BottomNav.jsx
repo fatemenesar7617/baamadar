@@ -1,4 +1,9 @@
+import { useCart } from "@/components/CartContext";
+
 export default function BottomNav({ activeTab, onTabChange }) {
+  const cartCtx = useCart();
+  const cartCount = cartCtx.cartCount;
+
   const items = [
     {
       id: "home",
@@ -47,6 +52,7 @@ export default function BottomNav({ activeTab, onTabChange }) {
             items-center
             gap-1
             cursor-pointer
+            relative
             ${
               activeTab === item.id
               ? "text-[#E86B42]"
@@ -68,9 +74,25 @@ export default function BottomNav({ activeTab, onTabChange }) {
               }
             `}
           />
-          <span className="text-xs font-peyda">
-            {item.title}
-          </span>
+
+          {item.id === "cart" && (
+            <div className="relative">
+              <span className="text-xs font-peyda">
+                {item.title}
+              </span>
+              {cartCount > 0 && (
+                <span className="absolute -top-3 -right-3 w-4 h-4 bg-[#E86B42] text-white text-[9px] rounded-full flex items-center justify-center font-peyda font-bold animate-bounce">
+                  {cartCount}
+                </span>
+              )}
+            </div>
+          )}
+
+          {item.id !== "cart" && (
+            <span className="text-xs font-peyda">
+              {item.title}
+            </span>
+          )}
         </div>
       ))}
     </div>

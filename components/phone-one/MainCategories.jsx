@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import CategoryItem from "./CategoryItem";
 import categories from "@/data/categories";
 
@@ -12,11 +12,21 @@ export default function MainCategories({
 
 
   const sliderRef = useRef(null);
+  const itemRefs = useRef({});
 
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
+  useEffect(() => {
+    if (selectedCategory && itemRefs.current[selectedCategory]) {
+      itemRefs.current[selectedCategory].scrollIntoView({ 
+        behavior: "smooth", 
+        inline: "center",
+        block: "nearest"
+      });
+    }
+  }, [selectedCategory]);
 
 
   const handleCategoryClick = (id) => {
@@ -35,7 +45,6 @@ export default function MainCategories({
 
   };
 
-
   return (
 
     <section className="mt-4 px-4">
@@ -45,7 +54,7 @@ export default function MainCategories({
 
         ref={sliderRef}
 
-        className="flex gap-4 overflow-x-auto whitespace-nowrap pb-2 no-scrollbar cursor-grab select-none"
+        className="flex gap-4 overflow-x-auto whitespace-nowrap pb-8 pt-4 no-scrollbar cursor-grab select-none items-start"
 
         onMouseDown={(e)=>{
 
@@ -103,15 +112,18 @@ export default function MainCategories({
         
 
 
-        {categories.map((item)=>(
+{categories.map((item)=>(
 
           <CategoryItem
+            ref={(el) => { itemRefs.current[item.id] = el; }}
 
             key={item.id}
 
             image={item.image}
 
             title={item.title}
+
+            color={item.color}
 
             active={selectedCategory === item.id}
 

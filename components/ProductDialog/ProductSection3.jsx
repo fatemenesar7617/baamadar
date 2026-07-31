@@ -11,9 +11,9 @@ export default function ProductSection3({
       className="
         relative
         bg-white
-        px-4
-        pt-4
-        pb-32
+        px-3
+        pt-6
+        pb-4
       "
     >
 

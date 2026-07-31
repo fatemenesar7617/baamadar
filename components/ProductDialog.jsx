@@ -24,8 +24,8 @@ export default function ProductDialog({
         inset-0
         z-[60]
         flex
-        items-end
-        justify-center
+        flex-col
+        justify-end
       "
     >
       {/* Backdrop */}
@@ -41,9 +41,14 @@ export default function ProductDialog({
           z-[60]
           w-full
           max-w-[390px]
+          mx-auto
           bg-white
           rounded-t-[32px]
           shadow-2xl
+          flex
+          flex-col
+          overflow-hidden
+        
         "
       >
         {/* Close Button */}
@@ -51,29 +56,31 @@ export default function ProductDialog({
           onClick={onClose}
           className="
             absolute
-            top-4
-            right-4
+            top-3
+            right-3
             z-50
             flex
-            h-10
-            w-10
+            h-9
+            w-9
             items-center
             justify-center
-            rounded-full
-            bg-white
-            text-3xl
-            text-gray-700
+            text-2xl
+            font-bold
+            text-gray-800
+            hover:text-black
+            transition-colors
+            cursor-pointer
           "
         >
           ×
         </button>
 
-        {/* Content */}
-        <div className="pb-[135px]">
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto pb-[140px]">
           <ProductSection3 product={product} />
         </div>
 
-        {/* Buy Box */}
+        {/* Buy Box - Fixed at bottom */}
         <div
           className="
             absolute
@@ -86,7 +93,7 @@ export default function ProductDialog({
             px-4
             pt-3
             pb-5
-            rounded-t-[24px]
+            z-10
           "
         >
           <ProductBuyBox

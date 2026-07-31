@@ -31,11 +31,11 @@ export default function Footer() {
 
   return (
     <footer
-      className={`px-4 fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[375px] w-full z-[70] transition-transform duration-200 ${
+      className={`fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[375px] w-full z-[70] transition-transform duration-200 ${
         hidden ? "translate-y-full -translate-x-1/2" : ""
       }`}
     >
-      <div className="bg-white border-t border-gray-100 h-16 flex items-center justify-around">
+      <div className="mx-auto max-w-[375px] bg-white border-t border-gray-100 h-16 flex items-center justify-around px-4">
 
         {/* خانه */}
         <button

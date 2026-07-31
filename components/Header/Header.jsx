@@ -1,10 +1,13 @@
 import { useRouter } from "next/router";
+import { useCart } from "@/components/CartContext";
 
-export default function Header({ onCartClick, cartCount = 0 }) {
+export default function Header({ onCartClick, cartCount: cartCountProp }) {
   const router = useRouter();
+  const cartCtx = useCart();
+  const cartCount = cartCountProp ?? cartCtx.cartCount;
 
   return (
-    <header className="w-full h-[72px] flex justify-between items-center px-4 bg-white shadow-sm sticky top-0 z-50">
+    <header className="w-full max-w-[375px] mx-auto h-[72px] flex justify-between items-center px-4 bg-white shadow-sm sticky top-0 z-50">
 
       {/* Logo */}
       <div
@@ -28,7 +31,7 @@ export default function Header({ onCartClick, cartCount = 0 }) {
       {/* Cart */}
       <div
         onClick={onCartClick}
-        className="relative cursor-pointer"
+        className="relative cursor-pointer flex items-center gap-1"
       >
         <img
           src="/logos/sabad.svg"
@@ -37,7 +40,7 @@ export default function Header({ onCartClick, cartCount = 0 }) {
         />
 
         {cartCount > 0 && (
-          <span className="absolute -top-1 -left-1 w-5 h-5 bg-[#E86B42] text-white text-xs rounded-full flex items-center justify-center font-peyda font-bold cursor-pointer">
+          <span className="absolute -top-1 -left-1 w-5 h-5 bg-[#E86B42] text-white text-xs rounded-full flex items-center justify-center font-peyda font-bold cursor-pointer animate-bounce">
             {cartCount}
           </span>
         )}

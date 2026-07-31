@@ -9,12 +9,14 @@ import ProductList from "./ProductList";
 import ProductDialog from "@/components/ProductDialog";
 import InlineSearch from "./InlineSearch";
 import { useCart } from "@/components/CartContext";
+import categories from "@/data/categories";
 
 export default function CategoryPhoneOne({ initialSearchQuery = "", initialCategory = null, initialDiscount = false, products }) {
   const router = useRouter();
   const { cart, setCart } = useCart();
 
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const defaultCategory = categories[0]?.id || null;
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory || defaultCategory);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -43,7 +45,8 @@ export default function CategoryPhoneOne({ initialSearchQuery = "", initialCateg
 
       <div className="
         relative
-        w-[390px]
+        max-w-[375px]
+        mx-auto
         bg-white
         overflow-visible
       ">
