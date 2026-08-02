@@ -222,55 +222,57 @@ export default function ProductSection({
         return (
           <div
             key={product.id}
-            className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm w-40 flex-shrink-0 flex flex-col"
+            className="bg-white rounded-2xl border border-gray-100 shadow-sm w-40 flex-shrink-0 flex flex-col overflow-hidden"
           >
-            <div
-              className="w-full h-32 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
-              onClick={() => onProductClick && onProductClick(product)}
-            >
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-24 h-24 object-contain"
-              />
-            </div>
+            <div className="p-3 flex flex-col">
+              <div
+                className="w-full h-32 bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer"
+                onClick={() => onProductClick && onProductClick(product)}
+              >
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-24 h-24 object-contain"
+                />
+              </div>
 
-            <h3 className="font-peyda text-sm font-medium mt-2 text-center h-14 flex items-center justify-center leading-6">
-              {product.title}
-            </h3>
+              <h3 className="font-peyda text-sm font-medium mt-2 text-center h-14 flex items-center justify-center leading-6">
+                {product.title}
+              </h3>
 
-            <div className="font-iranyekan text-center mt-2">
-              {product.discount && (
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-xs text-gray-400 line-through">
-                    {product.oldPrice} تومان
-                  </span>
+              <div className="font-iranyekan text-center mt-2">
+                {product.discount && (
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-xs text-gray-400 line-through">
+                      {product.oldPrice} تومان
+                    </span>
 
-                  <span className="text-xs bg-red-500 text-white rounded px-1">
-                    {product.discount}
-                  </span>
-                </div>
-              )}
+                    <span className="text-xs bg-red-500 text-white rounded px-1">
+                      {product.discount}
+                    </span>
+                  </div>
+                )}
 
               <span className="font-peyda block text-sm font-bold mt-1">
                 {product.price} تومان
               </span>
+              </div>
             </div>
 
-            <div className="mt-auto pt-3 h-14 flex items-center">
+            <div className="mt-auto">
               {qty === 0 ? (
                 <button
                   onClick={() => addToCart(product)}
-                  className={`font-peyda w-full h-10 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+                  className={`font-peyda w-full h-10 rounded-t-2xl text-sm font-medium transition-all duration-300 cursor-pointer ${
                     addedId === product.id
-                      ? "bg-green-500 text-white scale-105 shadow-lg shadow-green-500/40"
-                      : "bg-[#E86B42] text-white hover:bg-[#d95a2f] shadow-lg shadow-[#E86B42]/30 active:scale-95"
+                      ? "bg-green-500 text-white"
+                      : "bg-[#E86B42] text-white hover:bg-[#d95a2f] active:scale-[0.98]"
                   }`}
                 >
                   {addedId === product.id ? "✓ افزوده شد" : "افزودن به سبد"}
                 </button>
               ) : (
-                <div className="w-full h-10 flex items-center justify-between">
+                <div className="w-full h-10 rounded-t-2xl flex items-center justify-between px-3">
                   <button
                     onClick={() => increase(product.id)}
                     className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold hover:bg-[#d95a2f] transition-colors cursor-pointer"
