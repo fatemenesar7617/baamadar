@@ -64,7 +64,7 @@ export function CartProvider({ children }) {
 
   const clearCart = () => setCart([]);
 
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCount = cart.length;
 
   return (
     <CartContext.Provider

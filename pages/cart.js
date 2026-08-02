@@ -120,7 +120,7 @@ export default function CartPage() {
   {/* عنوان */}
   <p className="font-peyda font-semibold text-base">
     {step === "cart" &&
-      `سبد خرید (${cart.reduce((sum, item) => sum + item.quantity, 0)})`}
+      `سبد خرید (${cart.length})`}
 
     {step === "shipping" && "اطلاعات ارسال"}
 
@@ -216,16 +216,16 @@ export default function CartPage() {
 
                     {/* کنترل تعداد */}
 
-                    <div className="flex items-center gap-2 rounded-full border border-gray-200 px-2 py-1">
+                    <div className="flex items-center gap-2 bg-[#E86B42] rounded-full px-2 py-1">
 
                       <button
                         onClick={() => increase(item.id)}
-                        className="w-8 h-8 text-black text-lg font-bold flex items-center justify-center cursor-pointer"
+                        className="w-8 h-8 rounded-full bg-white text-[#E86B42] flex items-center justify-center text-lg font-bold hover:bg-orange-50 transition-colors cursor-pointer"
                       >
                         +
                       </button>
 
-                      <span className="w-5 text-center font-peyda font-bold">
+                      <span className="w-5 text-center font-peyda font-bold text-white">
                         {item.quantity}
                       </span>
 
@@ -233,20 +233,29 @@ export default function CartPage() {
 
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center cursor-pointer"
+                          className="w-8 h-8 rounded-full bg-white text-red-500 border border-gray-200 flex items-center justify-center hover:bg-red-50 transition-colors cursor-pointer"
                         >
-                          <img
-                            src="/icons/trash.svg"
-                            alt="trash"
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
                             className="w-4 h-4"
-                          />
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
                         </button>
 
                       ) : (
 
                         <button
                           onClick={() => decrease(item.id)}
-                          className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold cursor-pointer"
+                          className="w-8 h-8 rounded-full bg-white text-black border border-gray-200 flex items-center justify-center text-lg font-bold hover:bg-gray-50 transition-colors cursor-pointer"
                         >
                           −
                         </button>

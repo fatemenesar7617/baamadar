@@ -1,14 +1,12 @@
 import { useRouter } from "next/router";
 import { useCart } from "@/components/CartContext";
 
-export default function Header({ onCartClick, cartCount: cartCountProp }) {
+export default function Header({ onCartClick }) {
   const router = useRouter();
-  const cartCtx = useCart();
-  const cartCount = cartCountProp ?? cartCtx.cartCount;
+  const { cartCount } = useCart();
 
   return (
     <header className="w-full max-w-[375px] mx-auto h-[72px] flex justify-between items-center px-4 bg-white shadow-sm sticky top-0 z-50">
-
       {/* Logo */}
       <div
         onClick={() => router.push("/")}
@@ -27,7 +25,6 @@ export default function Header({ onCartClick, cartCount: cartCountProp }) {
         />
       </div>
 
-
       {/* Cart */}
       <div
         onClick={onCartClick}
@@ -45,7 +42,6 @@ export default function Header({ onCartClick, cartCount: cartCountProp }) {
           </span>
         )}
       </div>
-
     </header>
   );
 }

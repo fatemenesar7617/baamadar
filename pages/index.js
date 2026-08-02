@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <main className="max-w-[390px] mx-auto min-h-screen bg-white pb-20">
   
-      <Header onCartClick={() => router.push("/cart")} cartCount={cartCount} />
+      <Header onCartClick={() => router.push("/cart")} />
       <SearchBox query={searchQuery} setQuery={setSearchQuery} />
       <Banner />
       <FestivalBanner />

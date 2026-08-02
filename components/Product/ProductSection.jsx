@@ -287,14 +287,14 @@ export default function ProductSection({
                   {qty > 1 ? (
                     <button
                       onClick={() => decrease(product.id)}
-                      className="w-8 h-8 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center text-lg font-bold hover:bg-gray-300 transition-colors cursor-pointer"
+                      className="w-8 h-8 rounded-full bg-white text-black border border-gray-200 flex items-center justify-center text-lg font-bold hover:bg-gray-50 transition-colors cursor-pointer"
                     >
                       -
                     </button>
                   ) : (
                     <button
                       onClick={() => removeFromCart(product.id)}
-                      className="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center hover:bg-red-200 transition-colors cursor-pointer"
+                      className="w-8 h-8 rounded-full bg-white text-red-500 border border-gray-200 flex items-center justify-center hover:bg-red-50 transition-colors cursor-pointer"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
