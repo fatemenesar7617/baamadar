@@ -171,134 +171,103 @@ export default function ProductItem({
 
 
           {quantity > 0 ? (
+  <div
+    className="
+      flex
+      items-center
+      justify-between
+      w-30
+      px-2
+      py-1
+    "
+  >
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        increase();
+      }}
+      className="w-8 h-8 rounded-full bg-[#E86B42] text-white flex items-center justify-center text-lg font-bold hover:bg-[#d95a2f] transition-colors cursor-pointer"
+    >
+      +
+    </button>
 
-            <div className="
-              flex
-              items-center
-              gap-2
-              bg-[#E86B42]
-              rounded-full
-              px-2
-              py-1.5
-            ">
+    <span className="font-peyda text-sm font-bold text-[#2F2F2F]">
+      {quantity}
+    </span>
 
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  increase();
-                }}
-                className="w-8 h-8 rounded-full bg-white text-[#E86B42] flex items-center justify-center hover:bg-orange-50 transition-colors cursor-pointer"
-              >
-
-                <span className="text-lg font-bold">+</span>
-
-              </button>
-
-
-
-              <span className="font-peyda text-sm font-bold text-white">
-                {quantity}
-              </span>
-
-
-
-              {quantity > 1 && (
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    decrease();
-                  }}
-                  className="w-8 h-8 rounded-full bg-white text-black border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors cursor-pointer"
-                >
-
-                  <span className="text-lg font-bold">-</span>
-
-                </button>
-
-              )}
-
-
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeFromCart();
-                }}
-                className="w-8 h-8 rounded-full bg-white text-red-500 border border-gray-200 flex items-center justify-center hover:bg-red-50 transition-colors cursor-pointer"
-              >
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-
-              </button>
-
-
-            </div>
-
-
-          ) : (
-
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAddToCart();
-              }}
-              className={`
-                rounded-full
-                px-5
-                py-2
-                text-sm
-                font-peyda
-                transition-all
-                duration-300
-                cursor-pointer
-                ${added
-                  ? "bg-green-500 text-white scale-105 shadow-lg shadow-green-500/40"
-                  : "bg-[#E86B42] text-white hover:bg-[#d95a2f] active:scale-95 shadow-lg shadow-[#E86B42]/30"
-                }
-              `}
-            >
-              {added ? "✓ افزوده شد" : "افزودن به سبد"}
-            </button>
-
-
-          )}
-
+    {quantity > 1 ? (
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          decrease();
+        }}
+        className="w-8 h-8 rounded-full bg-white text-black border border-gray-200 flex items-center justify-center text-lg font-bold hover:bg-gray-50 transition-colors cursor-pointer"
+      >
+        -
+      </button>
+    ) : (
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          removeFromCart();
+        }}
+        className="w-8 h-8 rounded-full bg-white text-red-500 border border-gray-200 flex items-center justify-center hover:bg-red-50 transition-colors cursor-pointer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+          />
+        </svg>
+      </button>
+    )}
+  </div>
+) : (
+  <button
+  onClick={(e) => {
+    e.stopPropagation();
+    handleAddToCart();
+  }}
+  className={`
+    rounded-full
+    px-5
+    py-2
+    text-sm
+    font-peyda
+    transition-all
+    duration-300
+    cursor-pointer
+    ${
+      added
+        ? "bg-green-500 text-white"
+        : "bg-[#E86B42] text-white hover:bg-[#d95a2f] active:scale-[0.98]"
+    }
+  `}
+>
+  {added ? "✓ افزوده شد" : "افزودن به سبد"}
+</button>
+)}
 
           </div>
 
-
         </div>
-
 
       </div>
 
-
-
-
       {hasSupport && (
-
         <div
           className="
             mt-4
             -mx-4
             -mb-4
-            
             px-4
             py-3
             flex
@@ -306,24 +275,16 @@ export default function ProductItem({
             items-center
           "
         >
-
-
           <span className="font-peyda font-semibold text-xs text-[#E86B42]">
             قیمت با حامی کارت
           </span>
 
-
           <span className="font-peyda text-sm font-bold text-[#E86B42]">
             {supportPrice} تومان
           </span>
-
-
         </div>
-
       )}
 
-
     </div>
-
   );
 }

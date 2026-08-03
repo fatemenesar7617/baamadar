@@ -104,7 +104,7 @@ export default function CartPage() {
   };
 
   return (
-    <main className="max-w-[390px] mx-auto min-h-screen bg-white flex flex-col pb-20">
+    <main className="max-w-[390px] mx-auto min-h-screen bg-white pb-20">
           {/* Header */}
 
 <div className="relative flex items-center justify-center border-b border-gray-100 px-4 py-4">
@@ -220,7 +220,7 @@ export default function CartPage() {
 
                       <button
                         onClick={() => increase(item.id)}
-                        className="w-8 h-8 rounded-full bg-white text-[#E86B42] flex items-center justify-center text-lg font-bold hover:bg-orange-50 transition-colors cursor-pointer"
+                        className="w-8 h-8 rounded-full bg-white text-[#E86B42] border border-gray-200 flex items-center justify-center text-lg font-bold hover:bg-orange-50 active:bg-orange-100 transition-all cursor-pointer"
                       >
                         +
                       </button>
@@ -233,7 +233,7 @@ export default function CartPage() {
 
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="w-8 h-8 rounded-full bg-white text-red-500 border border-gray-200 flex items-center justify-center hover:bg-red-50 transition-colors cursor-pointer"
+                          className="w-8 h-8 rounded-full bg-white text-red-500 border border-gray-200 flex items-center justify-center hover:bg-orange-50 active:bg-orange-100 transition-all cursor-pointer"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -255,7 +255,7 @@ export default function CartPage() {
 
                         <button
                           onClick={() => decrease(item.id)}
-                          className="w-8 h-8 rounded-full bg-white text-black border border-gray-200 flex items-center justify-center text-lg font-bold hover:bg-gray-50 transition-colors cursor-pointer"
+                          className="w-8 h-8 rounded-full bg-white text-[#E86B42] border border-gray-200 flex items-center justify-center text-lg font-bold hover:bg-orange-50 active:bg-orange-100 transition-all cursor-pointer"
                         >
                           −
                         </button>
@@ -293,7 +293,7 @@ export default function CartPage() {
 
               <button
                 onClick={() => setStep("shipping")}
-                className="w-full h-12 rounded-2xl bg-[#E86B42] text-white font-peyda font-semibold cursor-pointer hover:bg-[#d95a2f] transition-colors"
+                className="w-full h-12 rounded-2xl bg-[#E86B42] text-white font-peyda font-semibold cursor-pointer hover:bg-orange-600 active:bg-orange-100 transition-all"
               >
                 تکمیل خرید
               </button>
